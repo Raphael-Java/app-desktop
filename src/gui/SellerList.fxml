@@ -28,13 +28,13 @@
         <columns>
           <TableColumn fx:id="tableColumnId" prefWidth="76.10809224843979" text="Id" />
           <TableColumn fx:id="tableColumnName" prefWidth="75.24329376220703" text="Name" />
-            <TableColumn fx:id="tableColumnEmail" prefWidth="75.0" text="Email" />
-            <TableColumn fx:id="tableColumnEDIT" minWidth="0.0" prefWidth="0.0" />
-            <TableColumn fx:id="tableColumnREMOVE" minWidth="0.0" prefWidth="0.0" />
-        
-            <TableColumn fx:id="tableColumnBirthDate" prefWidth="87.351318359375" text="Birth Date" />
-            <TableColumn fx:id="tableColumnBaseSalary" prefWidth="90.81085205078125" text="Base Salary" />
+          <TableColumn fx:id="tableColumnEmail" prefWidth="75.0" text="Email" />
+          <TableColumn fx:id="tableColumnBirthDate" prefWidth="87.351318359375" text="Birth Date" />
+          <TableColumn fx:id="tableColumnBaseSalary" prefWidth="90.81085205078125" text="Base Salary" />
+          <TableColumn fx:id="tableColumnEDIT" minWidth="80.0" prefWidth="80.0" />
+          <TableColumn fx:id="tableColumnREMOVE" minWidth="80.0" prefWidth="80.0" />
         </columns>
       </TableView>
    </children>
 </VBox>
+
