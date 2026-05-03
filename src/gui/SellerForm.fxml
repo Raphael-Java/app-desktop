@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
@@ -19,41 +20,44 @@
           <ColumnConstraints hgrow="SOMETIMES" maxWidth="392.6487034978094" minWidth="10.0" prefWidth="241.29730884448907" />
         </columnConstraints>
         <rowConstraints>
-          <RowConstraints maxHeight="53.97295121888857" minHeight="10.0" prefHeight="42.72972612123232" vgrow="SOMETIMES" />
-          <RowConstraints maxHeight="61.94593769795186" minHeight="0.0" prefHeight="48.97297627217061" vgrow="SOMETIMES" />
-          <RowConstraints maxHeight="49.297303895692565" minHeight="10.0" prefHeight="49.29729399809966" vgrow="SOMETIMES" />
-            <RowConstraints maxHeight="50.0" minHeight="10.0" prefHeight="39.783774710990286" vgrow="SOMETIMES" />
-            <RowConstraints maxHeight="51.02703032622466" minHeight="10.0" prefHeight="51.02703032622466" vgrow="SOMETIMES" />
-            <RowConstraints maxHeight="63.1351404963313" minHeight="0.0" prefHeight="42.02703527502109" vgrow="SOMETIMES" />
-            <RowConstraints maxHeight="47.56755931957349" minHeight="10.0" prefHeight="47.56755931957349" vgrow="SOMETIMES" />
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
             <Label text="Id" />
+            <TextField fx:id="txtId" editable="false" GridPane.columnIndex="1" />
+            
             <Label text="Name" GridPane.rowIndex="1" />
-            <TextField fx:id="txtId" editable="false" prefHeight="29.0" prefWidth="282.0" GridPane.columnIndex="1" />
-            <TextField fx:id="txtName" prefHeight="29.0" prefWidth="264.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            <TextField fx:id="txtName" GridPane.columnIndex="1" GridPane.rowIndex="1" />
             <Label fx:id="labelErrorName" textFill="#ed1111" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+            
+            <Label text="Email" GridPane.rowIndex="2" />
+            <TextField fx:id="txtEmail" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+            <Label fx:id="labelErrorEmail" textFill="#db1111" GridPane.columnIndex="2" GridPane.rowIndex="2" />
+            
+            <Label text="BirthDate" GridPane.rowIndex="3" />
+            <DatePicker fx:id="dpBirthDate" prefWidth="277.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+            <Label fx:id="labelErrorBirthDate" textFill="#d50606" GridPane.columnIndex="2" GridPane.rowIndex="3" />
+            
+            <Label text="BaseSalary" GridPane.rowIndex="4" />
+            <TextField fx:id="txtBaseSalary" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+            <Label fx:id="labelErrorBaseSalary" textFill="#fb0303" GridPane.columnIndex="2" GridPane.rowIndex="4" />
+            
+            <Label text="Department" GridPane.rowIndex="5" />
+            <ComboBox fx:id="comboBoxDepartment" prefWidth="277.0" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+            
             <HBox prefHeight="100.0" prefWidth="200.0" spacing="5.0" GridPane.columnIndex="1" GridPane.rowIndex="6">
                <children>
                   <Button fx:id="btSave" mnemonicParsing="false" onAction="#onBtSaveAction" text="Save" />
                   <Button fx:id="btCancel" mnemonicParsing="false" onAction="#onBtCancelAction" text="Cancel" />
                </children>
             </HBox>
-            <Label GridPane.rowIndex="2" />
-            <Label text="Email" GridPane.rowIndex="2" />
-            <Label text="BirthDate" GridPane.rowIndex="3" />
-            <Label text="BaseSalary" GridPane.rowIndex="4" />
-            <Label text="Department" GridPane.rowIndex="5" />
-            <TextField fx:id="txtEmail" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-            <TextField GridPane.columnIndex="1" GridPane.rowIndex="3" />
-            <TextField fx:id="txtBaseSalary" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-            <TextField GridPane.columnIndex="1" GridPane.rowIndex="5" />
-            <DatePicker fx:id="dpBirthDate" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-            <Label fx:id="labelErrorEmail" textFill="#db1111" GridPane.columnIndex="2" GridPane.rowIndex="2" />
-            <Label fx:id="labelErrorBirthDate" textFill="#d50606" GridPane.columnIndex="2" GridPane.rowIndex="3" />
-            <Label fx:id="labelErrorBaseSalary" textFill="#fb0303" GridPane.columnIndex="2" GridPane.rowIndex="4" />
          </children>
       </GridPane>
    </children>
 </AnchorPane>
-
