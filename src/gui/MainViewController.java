@@ -15,6 +15,9 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import model.services.DepartmentService;
 import model.services.SellerService;
@@ -22,10 +25,21 @@ import model.services.SellerService;
 public class MainViewController implements Initializable {
 	@FXML
 	private MenuItem menuItemSeller;
+	
 	@FXML
 	private MenuItem menuItemDepartment;
+	
 	@FXML
 	private MenuItem menuItemAbout;
+	
+	@FXML
+	private ImageView logoImage;
+	
+	@FXML
+	private AnchorPane anchorPane;
+	
+	@FXML
+    private ImageView imageView;
 
 	@FXML
 	public void onMenuItemSellerAction() {
@@ -50,6 +64,20 @@ public class MainViewController implements Initializable {
 
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
+	    Image image = new Image(
+	        getClass().getResourceAsStream("/img/Gemini_Generated_Image_h5a0jvh5a0jvh5a0.png")
+	    );
+
+	    logoImage.setImage(image);
+	    logoImage.setPreserveRatio(false);
+
+	    // Zera os tamanhos mínimos e preferenciais para permitir encolher ao minimizar
+	    anchorPane.setMinSize(0, 0);
+	    anchorPane.setPrefSize(0, 0);
+
+	    // Vincula a imagem ao tamanho do container
+	    logoImage.fitWidthProperty().bind(anchorPane.widthProperty());
+	    logoImage.fitHeightProperty().bind(anchorPane.heightProperty());
 	}
 
 	private synchronized <T> void loadView(String absoluteName, Consumer<T> initializingAction) {

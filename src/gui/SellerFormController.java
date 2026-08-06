@@ -128,7 +128,12 @@ public class SellerFormController implements Initializable {
 		Seller obj = new Seller();
 		ValidationException exception = new ValidationException("Validation error");
 
-		obj.setId(Utils.tryParseToInt(txtId.getText()));
+		// Validação e leitura do ID inserido pelo usuário
+		if (txtId.getText() == null || txtId.getText().trim().equals("")) {
+			exception.addError("id", "Field can't be empty");
+		} else {
+			obj.setId(Utils.tryParseToInt(txtId.getText()));
+		}
 
 		if (txtName.getText() == null || txtName.getText().trim().equals("")) {
 			exception.addError("name", "Field can't be empty");
@@ -140,16 +145,14 @@ public class SellerFormController implements Initializable {
 		}
 		obj.setEmail(txtEmail.getText());		
 		
-		if(dpBirthDate.getValue() == null) {
+		if (dpBirthDate.getValue() == null) {
 			exception.addError("birthDate", "Field can't be empty");			
-		}
-		else {
+		} else {
 			Instant instant = Instant.from(dpBirthDate.getValue().atStartOfDay(ZoneId.systemDefault()));
 			obj.setBirthDate(Date.from(instant));
-			
 		}
 		
-		if(txtBaseSalary.getText() == null || txtBaseSalary.getText().trim().equals("")){
+		if (txtBaseSalary.getText() == null || txtBaseSalary.getText().trim().equals("")) {
 			exception.addError("baseSalary", "Field can't be empty");
 		}
 		obj.setBaseSalary(Utils.tryParseToDouble(txtBaseSalary.getText()));
@@ -173,6 +176,9 @@ public class SellerFormController implements Initializable {
 	}
 
 	private void initializeNodes() {
+		// Libera a edição do campo ID para o usuário
+		txtId.setEditable(true);
+		
 		Constraints.setTextFieldInteger(txtId);
 		Constraints.setTextFieldMaxLength(txtName, 30);
 		Constraints.setTextFieldDouble(txtBaseSalary);
@@ -185,7 +191,9 @@ public class SellerFormController implements Initializable {
 		if (entity == null) {
 			throw new IllegalStateException("Entity was null");
 		}
-		txtId.setText(String.valueOf(entity.getId()));
+		// Trata ID nulo exibindo campo em branco em novos cadastros
+		txtId.setText(entity.getId() == null ? "" : String.valueOf(entity.getId()));
+		
 		txtName.setText(entity.getName());
 		txtEmail.setText(entity.getEmail());
 		Locale.setDefault(Locale.US);
@@ -193,10 +201,9 @@ public class SellerFormController implements Initializable {
 		if (entity.getBirthDate() != null) {
 			dpBirthDate.setValue(LocalDate.ofInstant(entity.getBirthDate().toInstant(), ZoneId.systemDefault()));
 		}
-		if(entity.getDepartment() == null) {
+		if (entity.getDepartment() == null) {
 			comboBoxDepartment.getSelectionModel().selectFirst();
-			
-		}else {
+		} else {
 			comboBoxDepartment.setValue(entity.getDepartment());
 		}
 	}
