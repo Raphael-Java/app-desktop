@@ -7,7 +7,7 @@ import java.io.IOException;
 
 public class BalanceService {
 
-    private static double balance = 5000.00;
+    private static double balance = 15000.00;
 
     public static double getBalance() {
         return balance;

@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.chart.BarChart?>
+<?import javafx.scene.chart.CategoryAxis?>
+<?import javafx.scene.chart.NumberAxis?>
+<?import javafx.scene.chart.PieChart?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<VBox spacing="20.0" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.DashboardController">
+   <padding>
+      <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+   </padding>
+   <children>
+      <Label text="Dashboard Geral">
+         <font>
+            <Font name="System Bold" size="24.0" />
+         </font>
+      </Label>
+      
+      <!-- Cards com Indicadores Rápidos (KPIs) -->
+      <HBox spacing="20.0">
+         <children>
+            <VBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" style="-fx-background-color: #3498db; -fx-background-radius: 8;">
+               <children>
+                  <Label text="Total Vendedores" textFill="WHITE">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="lblTotalSellers" text="0" textFill="WHITE">
+                     <font>
+                        <Font name="System Bold" size="28.0" />
+                     </font>
+                  </Label>
+               </children>
+            </VBox>
+            <VBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" style="-fx-background-color: #2ecc71; -fx-background-radius: 8;">
+               <children>
+                  <Label text="Total Departamentos" textFill="WHITE">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="lblTotalDepartments" text="0" textFill="WHITE">
+                     <font>
+                        <Font name="System Bold" size="28.0" />
+                     </font>
+                  </Label>
+               </children>
+            </VBox>
+            <VBox alignment="CENTER" prefHeight="100.0" prefWidth="250.0" style="-fx-background-color: #e74c3c; -fx-background-radius: 8;">
+               <children>
+                  <Label text="Folha Salarial Total" textFill="WHITE">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="lblTotalPayroll" text="R$ 0,00" textFill="WHITE">
+                     <font>
+                        <Font name="System Bold" size="24.0" />
+                     </font>
+                  </Label>
+               </children>
+            </VBox>
+         </children>
+      </HBox>
+
+      <!-- Seção de Gráficos -->
+      <HBox spacing="20.0" VBox.vgrow="ALWAYS">
+         <children>
+            <PieChart fx:id="pieChartDepartments" title="Vendedores por Departamento" HBox.hgrow="ALWAYS" />
+            <BarChart fx:id="barChartSalaries" title="Média Salarial por Depto" HBox.hgrow="ALWAYS">
+              <xAxis>
+                <CategoryAxis label="Departamento" side="BOTTOM" />
+              </xAxis>
+              <yAxis>
+                <NumberAxis label="Média (R$)" side="LEFT" />
+              </yAxis>
+            </BarChart>
+         </children>
+      </HBox>
+   </children>
+</VBox>

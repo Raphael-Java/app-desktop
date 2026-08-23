@@ -40,6 +40,13 @@ public class MainViewController implements Initializable {
 	
 	@FXML
     private ImageView imageView;
+	
+	@FXML
+	public void onMenuItemDashboardAction() {
+	    loadView("/gui/DashboardView.fxml", (DashboardController controller) -> {
+	        controller.loadDashboardData();
+	    });
+	}
 
 	@FXML
 	public void onMenuItemSellerAction() {
