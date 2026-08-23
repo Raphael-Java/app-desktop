@@ -11,3 +11,98 @@
 .menu-bar .menu-item .label {
     -fx-font-size: 18px;
 }
+
+/* Fundo Geral da Tela de Login */
+.login-bg {
+    /* Define o fundo usando a imagem armazenada na pasta img */
+    -fx-background-image: url("../img/bg-login.png");
+    -fx-background-position: center center;
+    -fx-background-repeat: no-repeat;
+    -fx-background-size: cover;
+}
+
+/* Card Centralizado com Sombra e Borda Arredondada */
+.login-card {
+    -fx-background-color: #ffffff;
+    -fx-background-radius: 12px;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.4), 20, 0, 0, 8);
+}
+
+/* Textos de Titulo e Subtitulo */
+.login-title {
+    -fx-text-fill: #2c3e50;
+}
+
+.login-subtitle {
+    -fx-text-fill: #7f8c8d;
+    -fx-font-size: 12px;
+}
+
+.input-label {
+    -fx-text-fill: #34495e;
+    -fx-font-weight: bold;
+    -fx-font-size: 13px;
+}
+
+/* Inputs Bonitos com Foco */
+.custom-input {
+    -fx-pref-height: 38px;
+    -fx-background-radius: 6px;
+    -fx-border-radius: 6px;
+    -fx-border-color: #bdc3c7;
+    -fx-border-width: 1px;
+    -fx-background-color: #f8f9fa;
+}
+
+.custom-input:focused {
+    -fx-border-color: #3498db;
+    -fx-background-color: #ffffff;
+}
+
+/* Botão Moderno com Efeito Hover */
+.btn-login {
+    -fx-background-color: #34495e;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-font-size: 14px;
+    -fx-background-radius: 6px;
+    -fx-cursor: hand;
+}
+
+.btn-login:hover {
+    -fx-background-color: #2c3e50;
+}
+.btn-login:pressed {
+    -fx-background-color: #1f618d;
+}
+
+/* Estilo do Menu Lateral (Esquerda) */
+.sidebar {
+    -fx-background-color: #34495e;
+}
+
+.sidebar-section-title {
+    -fx-text-fill: #bdc3c7;
+    -fx-font-size: 11px;
+    -fx-font-weight: bold;
+    -fx-padding: 0 0 5px 15px;
+}
+
+.sidebar-btn {
+    -fx-background-color: transparent;
+    -fx-text-fill: #ecf0f1;
+    -fx-font-size: 14px;
+    -fx-alignment: BASELINE_LEFT;
+    -fx-padding: 10px 15px;
+    -fx-cursor: hand;
+    -fx-background-radius: 0;
+}
+
+.sidebar-btn:hover {
+    -fx-background-color: #2c3e50;
+    -fx-text-fill: #3498db;
+}
+
+.sidebar-btn:pressed {
+    -fx-background-color: #1abc9c;
+}

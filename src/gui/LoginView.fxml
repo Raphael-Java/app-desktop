@@ -5,31 +5,47 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox alignment="CENTER" spacing="15.0" prefHeight="300.0" prefWidth="350.0" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.LoginController">
-   <padding>
-      <Insets bottom="20.0" left="30.0" right="30.0" top="20.0" />
-   </padding>
+<StackPane prefHeight="450.0" prefWidth="400.0" styleClass="login-bg" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.LoginController">
    <children>
-      <Label text="Acesso ao Sistema">
-         <font>
-            <Font name="System Bold" size="20.0" />
-         </font>
-      </Label>
-      <VBox spacing="5.0">
+      <VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" prefWidth="320.0" spacing="20.0" styleClass="login-card">
+         <padding>
+            <Insets bottom="30.0" left="30.0" right="30.0" top="30.0" />
+         </padding>
          <children>
-            <Label text="Usuário" />
-            <TextField fx:id="txtUsername" promptText="Digite seu usuário" />
+            <VBox alignment="CENTER" spacing="5.0">
+               <children>
+                  <Label styleClass="login-title" text="BEM-VINDO">
+                     <font>
+                        <Font name="System Bold" size="22.0" />
+                     </font>
+                  </Label>
+                  <Label styleClass="login-subtitle" text="Faça login para continuar" />
+               </children>
+            </VBox>
+            
+            <VBox spacing="15.0">
+               <children>
+                  <VBox spacing="5.0">
+                     <children>
+                        <Label styleClass="input-label" text="Usuário" />
+                        <TextField fx:id="txtUsername" promptText="Digite seu usuário" styleClass="custom-input" />
+                     </children>
+                  </VBox>
+                  <VBox spacing="5.0">
+                     <children>
+                        <Label styleClass="input-label" text="Senha" />
+                        <PasswordField fx:id="txtPassword" promptText="Digite sua senha" styleClass="custom-input" />
+                     </children>
+                  </VBox>
+               </children>
+            </VBox>
+
+            <Button defaultButton="true" mnemonicParsing="false" onAction="#onBtLoginAction" prefHeight="40.0" prefWidth="260.0" styleClass="btn-login" text="ENTRAR" />
          </children>
       </VBox>
-      <VBox spacing="5.0">
-         <children>
-            <Label text="Senha" />
-            <PasswordField fx:id="txtPassword" promptText="Digite sua senha" />
-         </children>
-      </VBox>
-      <Button mnemonicParsing="false" onAction="#onBtLoginAction" prefWidth="120.0" text="Entrar" />
    </children>
-</VBox>
+</StackPane>
