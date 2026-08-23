@@ -20,6 +20,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import model.services.DepartmentService;
+import model.services.SalesService;
 import model.services.SellerService;
 
 public class MainViewController implements Initializable {
@@ -86,6 +87,14 @@ public class MainViewController implements Initializable {
 			controller.setDepartmentService(new DepartmentService());
 			controller.updateTableView();
 		});
+	}
+	
+	@FXML
+	public void onMenuItemSalesAction() {
+	    loadView("/gui/SalesList.fxml", (SalesListController controller) -> {
+	        controller.setSalesService(new SalesService());
+	        controller.updateTableView();
+	    });
 	}
 
 	@FXML
