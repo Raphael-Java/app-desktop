@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<VBox spacing="15.0" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.ReportsViewController">
+   <padding>
+      <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+   </padding>
+   <children>
+      <Label text="Relatório de Vendas por Período">
+         <font>
+            <Font name="System Bold" size="18.0" />
+         </font>
+      </Label>
+      <HBox alignment="CENTER_LEFT" spacing="10.0">
+         <children>
+            <Label text="De:" />
+            <DatePicker fx:id="dpStart" prefWidth="140.0" />
+            <Label text="Até:" />
+            <DatePicker fx:id="dpEnd" prefWidth="140.0" />
+            <Button fx:id="btFilter" mnemonicParsing="false" onAction="#onBtFilterAction" text="Filtrar" />
+            <Button fx:id="btExport" mnemonicParsing="false" onAction="#onBtExportAction" styleClass="sidebar-btn" text="📄 Exportar CSV" />
+         </children>
+      </HBox>
+      <TableView fx:id="tableViewReports" prefHeight="300.0" VBox.vgrow="ALWAYS">
+        <columns>
+          <TableColumn fx:id="tableColumnId" prefWidth="60.0" text="ID" />
+          <TableColumn fx:id="tableColumnDate" prefWidth="120.0" text="Data" />
+            <TableColumn fx:id="tableColumnSeller" prefWidth="150.0" text="Vendedor" />
+            <TableColumn fx:id="tableColumnAmount" prefWidth="110.0" text="Valor" />
+        </columns>
+      </TableView>
+   </children>
+</VBox>

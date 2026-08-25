@@ -14,10 +14,15 @@
 
 <BorderPane prefHeight="600.0" prefWidth="950.0" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.MainViewController">
    
-   <!-- 1. MENU SUPERIOR -->
+   <!-- 1. MENU SUPERIOR COM HOME NOVO -->
    <top>
       <MenuBar BorderPane.alignment="CENTER">
         <menus>
+          <Menu mnemonicParsing="false" text="Home">
+             <items>
+                <MenuItem fx:id="menuItemHome" mnemonicParsing="false" onAction="#onMenuItemHomeAction" text="Main Home" />
+             </items>
+          </Menu>
           <Menu mnemonicParsing="false" text="Registration">
             <items>
               <MenuItem fx:id="menuItemSeller" mnemonicParsing="false" onAction="#onMenuItemSellerAction" text="Seller" />
@@ -39,7 +44,7 @@
       </MenuBar>
    </top>
 
-   <!-- 2. MENU LATERAL NOVO -->
+   <!-- 2. MENU LATERAL -->
    <left>
       <VBox prefWidth="200.0" spacing="10.0" styleClass="sidebar" BorderPane.alignment="CENTER">
          <padding>

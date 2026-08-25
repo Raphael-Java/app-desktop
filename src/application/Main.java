@@ -2,6 +2,7 @@ package application;
 
 import java.io.IOException;
 
+import gui.AppSettings;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -40,5 +41,14 @@ public class Main extends Application {
 	
 	public static void main(String[] args) {
 		launch(args);
+	}
+	
+	public static void updateTheme() {
+	    mainScene.getStylesheets().clear();
+	    if ("Escuro".equals(AppSettings.getTheme())) {
+	        mainScene.getStylesheets().add(Main.class.getResource("/application/dark-theme.css").toExternalForm());
+	    } else {
+	        mainScene.getStylesheets().add(Main.class.getResource("/application/application.css").toExternalForm());
+	    }
 	}
 }

@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<VBox prefHeight="500.0" prefWidth="700.0" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.ProfileViewController">
+   <children>
+      <StackPane fx:id="stackPane" VBox.vgrow="ALWAYS">
+         <children>
+            <!-- Imagem ajustável sem tamanho fixo -->
+            <ImageView fx:id="bgImage" pickOnBounds="true" preserveRatio="false">
+               <image>
+                  <Image url="@/img/profile-bg.png" />
+               </image>
+            </ImageView>
+
+            <!-- Conteúdo centralizado -->
+            <VBox spacing="20.0">
+               <padding>
+                  <Insets bottom="25.0" left="25.0" right="25.0" top="25.0" />
+               </padding>
+               <children>
+                  <Label text="Perfil do Usuário" textFill="WHITE">
+                     <font>
+                        <Font name="System Bold" size="20.0" />
+                     </font>
+                  </Label>
+                  
+                  <GridPane hgap="15.0" style="-fx-background-color: rgba(15, 15, 25, 0.85); -fx-background-radius: 10; -fx-padding: 20;" vgap="12.0">
+                     <columnConstraints>
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="130.0" minWidth="100.0" />
+                        <ColumnConstraints hgrow="ALWAYS" maxWidth="320.0" />
+                     </columnConstraints>
+                     <rowConstraints>
+                        <RowConstraints minHeight="30.0" />
+                        <RowConstraints minHeight="30.0" />
+                        <RowConstraints minHeight="30.0" />
+                        <RowConstraints minHeight="30.0" />
+                        <RowConstraints minHeight="30.0" />
+                     </rowConstraints>
+                     <children>
+                        <Label text="Nome:" textFill="WHITE" />
+                        <TextField fx:id="txtProfileName" text="Admin" GridPane.columnIndex="1" />
+                        
+                        <Label text="E-mail:" textFill="WHITE" GridPane.rowIndex="1" />
+                        <TextField fx:id="txtProfileEmail" text="admin@sistema.com" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                        
+                        <Label text="Cargo:" textFill="WHITE" GridPane.rowIndex="2" />
+                        <TextField fx:id="txtProfileRole" editable="false" text="Administrador" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                        
+                        <Label text="Nova Senha:" textFill="WHITE" GridPane.rowIndex="3" />
+                        <PasswordField fx:id="txtNewPassword" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                        
+                        <Label text="Confirmar Senha:" textFill="WHITE" GridPane.rowIndex="4" />
+                        <PasswordField fx:id="txtConfirmPassword" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                     </children>
+                  </GridPane>
+                  
+                  <HBox spacing="10.0">
+                     <children>
+                        <Button fx:id="btSaveProfile" mnemonicParsing="false" onAction="#onBtSaveProfileAction" styleClass="sidebar-btn" text="Salvar Perfil" />
+                        <Button fx:id="btLogout" mnemonicParsing="false" onAction="#onBtLogoutAction" text="Sair / Logout" />
+                     </children>
+                  </HBox>
+               </children>
+            </VBox>
+         </children>
+      </StackPane>
+   </children>
+</VBox>
