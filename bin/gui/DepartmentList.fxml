@@ -6,31 +6,76 @@
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.ToolBar?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox prefHeight="391.0" prefWidth="466.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.DepartmentListController">
+<VBox prefHeight="550.0" prefWidth="900.0" spacing="10.0" style="-fx-background-color: transparent;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.DepartmentListController">
+   <padding>
+      <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+   </padding>
    <children>
-      <Label text="Department Registration">
+      <!-- Cabeçalho -->
+      <Label text="Department Registration" textFill="WHITE">
          <font>
-            <Font name="Arial Bold Italic" size="17.0" />
+            <Font name="System Bold" size="18.0" />
          </font>
-         <padding>
-            <Insets left="5.0" top="5.0" />
-         </padding>
       </Label>
-      <ToolBar prefHeight="40.0" prefWidth="200.0">
-        <items>
-          <Button fx:id="btNew" mnemonicParsing="false" onAction="#onBtNewAction" text="New" />
-        </items>
-      </ToolBar>
-      <TableView fx:id="tableViewDepartment" prefHeight="200.0" prefWidth="200.0">
-        <columns>
-          <TableColumn fx:id="tableColumnId" prefWidth="75.0" text="Id" />
-          <TableColumn fx:id="tableColumnName" prefWidth="75.0" text="Name" />
-            <TableColumn fx:id="tableColumnEDIT" prefWidth="75.0" />
-            <TableColumn fx:id="tableColumnREMOVE" prefWidth="75.0" />
-        </columns>
-      </TableView>
+
+      <!-- Barra de Ferramentas + Contador -->
+      <HBox alignment="CENTER_LEFT" spacing="20.0">
+         <children>
+            <ToolBar style="-fx-background-color: transparent; -fx-padding: 0;">
+              <items>
+                <Button fx:id="btNew" mnemonicParsing="false" onAction="#onBtNewAction" style="-fx-background-color: #2563eb; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 4px; -fx-cursor: hand;" text="+ New Department" />
+              </items>
+            </ToolBar>
+            
+            <!-- Contador Dinâmico -->
+            <Label fx:id="labelCount" text="Total: 0 departamentos" textFill="#94a3b8">
+               <font>
+                  <Font name="System Bold" size="13.0" />
+               </font>
+            </Label>
+         </children>
+      </HBox>
+
+      <!-- Divisão Principal: Tabela (Esquerda) | Card Ilustrativo (Direita) -->
+      <HBox fillHeight="true" spacing="15.0" VBox.vgrow="ALWAYS">
+         <children>
+            <!-- 1. Tabela de Departamentos -->
+            <TableView fx:id="tableViewDepartment" HBox.hgrow="ALWAYS">
+              <columns>
+                <TableColumn fx:id="tableColumnId" prefWidth="60.0" text="Id" />
+                <TableColumn fx:id="tableColumnName" prefWidth="220.0" text="Name" />
+                <TableColumn fx:id="tableColumnEDIT" prefWidth="75.0" />
+                <TableColumn fx:id="tableColumnREMOVE" prefWidth="75.0" />
+              </columns>
+            </TableView>
+
+            <!-- 2. Card Lateral Ilustrativo -->
+            <VBox alignment="CENTER" maxWidth="340.0" minWidth="260.0" prefWidth="300.0" spacing="15.0" style="-fx-background-color: #1e293b; -fx-background-radius: 8px; -fx-padding: 15px;" HBox.hgrow="NEVER">
+               <children>
+                  <ImageView fitHeight="280.0" fitWidth="260.0" preserveRatio="true">
+                     <image>
+                        <Image url="@/img/offroad.png" />
+                     </image>
+                  </ImageView>
+                  <Label text="Categorias de Veículos" textFill="WHITE">
+                     <font>
+                        <Font name="System Bold" size="15.0" />
+                     </font>
+                  </Label>
+                  <Label alignment="CENTER" text="Gerencie os setores de catálogo para organizar produtos, estoque e vendas do sistema." textAlignment="CENTER" textFill="#94a3b8" wrapText="true">
+                     <font>
+                        <Font size="12.0" />
+                     </font>
+                  </Label>
+               </children>
+            </VBox>
+         </children>
+      </HBox>
    </children>
 </VBox>

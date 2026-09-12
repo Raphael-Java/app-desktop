@@ -7,41 +7,78 @@
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Circle?>
 
-<BorderPane prefHeight="600.0" prefWidth="950.0" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.MainViewController">
+<BorderPane prefHeight="600.0" prefWidth="950.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.MainViewController">
    
-   <!-- 1. MENU SUPERIOR COM HOME NOVO -->
+   <!-- 1. MENU SUPERIOR COM PROFILE DO USUÁRIO -->
    <top>
-      <MenuBar BorderPane.alignment="CENTER">
-        <menus>
-          <Menu mnemonicParsing="false" text="Home">
-             <items>
-                <MenuItem fx:id="menuItemHome" mnemonicParsing="false" onAction="#onMenuItemHomeAction" text="Main Home" />
-             </items>
-          </Menu>
-          <Menu mnemonicParsing="false" text="Registration">
-            <items>
-              <MenuItem fx:id="menuItemSeller" mnemonicParsing="false" onAction="#onMenuItemSellerAction" text="Seller" />
-              <MenuItem fx:id="menuItemDepartment" mnemonicParsing="false" onAction="#onMenuItemDepartmentAction" text="Department" />
-              <MenuItem fx:id="menuItemSales" mnemonicParsing="false" onAction="#onMenuItemSalesAction" text="Sales" />
-            </items>
-          </Menu>
-          <Menu mnemonicParsing="false" text="Dashboard">
-             <items>
-                <MenuItem mnemonicParsing="false" onAction="#onMenuItemDashboardAction" text="Show Dashboard" />
-             </items>
-          </Menu>
-          <Menu mnemonicParsing="false" text="Help">
-            <items>
-              <MenuItem fx:id="menuItemAbout" mnemonicParsing="false" onAction="#onMenuItemAboutAction" text="About" />
-            </items>
-          </Menu>
-        </menus>
-      </MenuBar>
+      <HBox alignment="CENTER_LEFT" styleClass="top-bar" BorderPane.alignment="CENTER">
+         <children>
+            <MenuBar HBox.hgrow="ALWAYS">
+              <menus>
+                <Menu mnemonicParsing="false" text="Home">
+                   <items>
+                      <MenuItem fx:id="menuItemHome" mnemonicParsing="false" onAction="#onMenuItemHomeAction" text="Main Home" />
+                   </items>
+                </Menu>
+                <Menu fx:id="menuRegistration" mnemonicParsing="false" text="Registration">
+                  <items>
+                    <MenuItem fx:id="menuItemSeller" mnemonicParsing="false" onAction="#onMenuItemSellerAction" text="Seller" />
+                    <MenuItem fx:id="menuItemDepartment" mnemonicParsing="false" onAction="#onMenuItemDepartmentAction" text="Department" />
+                    <MenuItem fx:id="menuItemSales" mnemonicParsing="false" onAction="#onMenuItemSalesAction" text="Sales" />
+                  </items>
+                </Menu>
+                <Menu mnemonicParsing="false" text="Dashboard">
+                   <items>
+                      <MenuItem mnemonicParsing="false" onAction="#onMenuItemDashboardAction" text="Show Dashboard" />
+                   </items>
+                </Menu>
+                
+                <!-- MENU FERRAMENTAS COM CALCULAR FRETE -->
+                <Menu mnemonicParsing="false" text="Ferramentas">
+                  <items>
+                    <MenuItem mnemonicParsing="false" onAction="#onBtCalculateShippingAction" text="🚚 Calcular Frete" />
+                  </items>
+                </Menu>
+
+                <Menu mnemonicParsing="false" text="Help">
+                  <items>
+                    <MenuItem fx:id="menuItemAbout" mnemonicParsing="false" onAction="#onMenuItemAboutAction" text="About" />
+                  </items>
+                </Menu>
+              </menus>
+            </MenuBar>
+
+            <!-- CARD DE USUÁRIO LOGADO NA BARRA BRANCA -->
+            <HBox alignment="CENTER_RIGHT" spacing="10.0" styleClass="user-profile-box">
+               <padding>
+                  <Insets right="15.0" />
+               </padding>
+               <children>
+                  <VBox alignment="CENTER_RIGHT" spacing="2.0">
+                     <children>
+                        <Label fx:id="lblUserName" styleClass="user-name" text="Lucas Silva" />
+                        <Label fx:id="lblUserRole" styleClass="user-role" text="Administrador" />
+                     </children>
+                  </VBox>
+                  <ImageView fx:id="imgUserAvatar" fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@/img/default-avatar.png" />
+                     </image>
+                  </ImageView>
+               </children>
+            </HBox>
+         </children>
+      </HBox>
    </top>
 
    <!-- 2. MENU LATERAL -->
@@ -53,6 +90,7 @@
          <children>
             <Label styleClass="sidebar-section-title" text="ATALHOS RÁPIDOS" />
             <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onBtReportsAction" styleClass="sidebar-btn" text="📊 Relatórios" />
+            <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onBtExportPdfAction" styleClass="sidebar-btn" text="📄 Exportar PDF" />
             <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onBtSettingsAction" styleClass="sidebar-btn" text="⚙️ Configurações" />
             <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onBtNotificationsAction" styleClass="sidebar-btn" text="🔔 Notificações" />
             <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onBtProfileAction" styleClass="sidebar-btn" text="👤 Meu Perfil" />
@@ -60,15 +98,98 @@
       </VBox>
    </left>
 
-   <!-- 3. ÁREA CENTRAL COM A IMAGEM -->
+   <!-- 3. ÁREA CENTRAL -->
    <center>
-      <ScrollPane fitToHeight="true" fitToWidth="true" BorderPane.alignment="CENTER">
+      <ScrollPane fitToHeight="true" fitToWidth="true" styleClass="scroll-pane" BorderPane.alignment="CENTER">
          <content>
-            <VBox fx:id="mainContainer" alignment="CENTER" spacing="10.0" styleClass="content-area">
+            <VBox fx:id="mainContainer" alignment="TOP_CENTER" spacing="20.0" styleClass="content-area">
+               <padding>
+                  <Insets bottom="0.0" left="0.0" right="0.0" top="20.0" />
+               </padding>
                <children>
-                  <AnchorPane fx:id="anchorPane" VBox.vgrow="ALWAYS">
+                  <HBox fx:id="cardsContainer" spacing="15.0">
+                     <VBox.margin>
+                        <Insets left="20.0" right="20.0" />
+                     </VBox.margin>
                      <children>
-                        <ImageView fx:id="logoImage" pickOnBounds="true" preserveRatio="true" />
+                        <!-- Cards de KPI -->
+                        <HBox spacing="12.0" styleClass="kpi-card" HBox.hgrow="ALWAYS">
+                           <children>
+                              <StackPane styleClass="kpi-icon-bg, kpi-icon-green">
+                                 <children>
+                                    <Label styleClass="kpi-icon-text" text="\$" />
+                                 </children>
+                              </StackPane>
+                              <VBox spacing="4.0">
+                                 <children>
+                                    <Label styleClass="kpi-title" text="Vendas Hoje" />
+                                    <Label fx:id="lblTodaySales" styleClass="kpi-value" text="R$ 1250.00" />
+                                    <Label styleClass="kpi-badge-positive" text="▲ 12%" />
+                                 </children>
+                              </VBox>
+                           </children>
+                        </HBox>
+
+                        <HBox spacing="12.0" styleClass="kpi-card" HBox.hgrow="ALWAYS">
+                           <children>
+                              <StackPane styleClass="kpi-icon-bg, kpi-icon-blue">
+                                 <children>
+                                    <Label styleClass="kpi-icon-text" text="📊" />
+                                 </children>
+                              </StackPane>
+                              <VBox spacing="4.0">
+                                 <children>
+                                    <Label styleClass="kpi-title" text="Total no Mês" />
+                                    <Label fx:id="lblMonthTotal" styleClass="kpi-value" text="R$ 45280.00" />
+                                    <Label styleClass="kpi-badge-positive" text="▲ 8%" />
+                                 </children>
+                              </VBox>
+                           </children>
+                        </HBox>
+
+                        <HBox spacing="12.0" styleClass="kpi-card" HBox.hgrow="ALWAYS">
+                           <children>
+                              <StackPane styleClass="kpi-icon-bg, kpi-icon-purple">
+                                 <children>
+                                    <Label styleClass="kpi-icon-text" text="👥" />
+                                 </children>
+                              </StackPane>
+                              <VBox spacing="4.0">
+                                 <children>
+                                    <Label styleClass="kpi-title" text="Vendedores" />
+                                    <Label fx:id="lblActiveSellers" styleClass="kpi-value" text="5" />
+                                    <Label styleClass="kpi-subtext" text="Equipe ativa" />
+                                 </children>
+                              </VBox>
+                           </children>
+                        </HBox>
+
+                        <HBox spacing="12.0" styleClass="kpi-card" HBox.hgrow="ALWAYS">
+                           <children>
+                              <StackPane styleClass="kpi-icon-bg, kpi-icon-orange">
+                                 <children>
+                                    <Label styleClass="kpi-icon-text" text="🏷️" />
+                                 </children>
+                              </StackPane>
+                              <VBox spacing="4.0">
+                                 <children>
+                                    <Label styleClass="kpi-title" text="Ticket Médio" />
+                                    <Label fx:id="lblAverageTicket" styleClass="kpi-value" text="R$ 85.50" />
+                                    <Label styleClass="kpi-badge-positive" text="▲ 15%" />
+                                 </children>
+                              </VBox>
+                           </children>
+                        </HBox>
+                     </children>
+                  </HBox>
+
+                  <AnchorPane fx:id="anchorPane" styleClass="banner-container" VBox.vgrow="ALWAYS">
+                     <children>
+                        <ImageView fx:id="logoImage" fitHeight="450.0" fitWidth="700.0" pickOnBounds="true" preserveRatio="false" styleClass="banner-image" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                           <image>
+                              <Image url="@/img/office_work.png" />
+                           </image>
+                        </ImageView>
                      </children>
                   </AnchorPane>
                </children>
@@ -76,4 +197,20 @@
          </content>
       </ScrollPane>
    </center>
+
+   <!-- 4. RODAPÉ DE STATUS DO BANCO DE DADOS -->
+   <bottom>
+      <HBox alignment="CENTER_LEFT" spacing="8.0" styleClass="status-bar" BorderPane.alignment="CENTER">
+         <padding>
+            <Insets bottom="6.0" left="15.0" right="15.0" top="6.0" />
+         </padding>
+         <children>
+            <Circle fx:id="circleDbStatus" fill="#22c55e" radius="5.0" />
+            <Label fx:id="lblDbStatus" styleClass="status-text" text="Conectado ao Banco de Dados (MySQL)" />
+            <Region HBox.hgrow="ALWAYS" />
+            <Label styleClass="status-text" text="v1.0.0" />
+         </children>
+      </HBox>
+   </bottom>
+
 </BorderPane>

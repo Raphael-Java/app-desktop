@@ -125,44 +125,42 @@ public class SellerFormController implements Initializable {
 	}
 
 	private Seller getFormData() {
-		Seller obj = new Seller();
-		ValidationException exception = new ValidationException("Validation error");
+	    Seller obj = new Seller();
+	    ValidationException exception = new ValidationException("Validation error");
 
-		// Validação e leitura do ID inserido pelo usuário
-		if (txtId.getText() == null || txtId.getText().trim().equals("")) {
-			exception.addError("id", "Field can't be empty");
-		} else {
-			obj.setId(Utils.tryParseToInt(txtId.getText()));
-		}
+	    // Preenche o ID apenas se o campo contiver texto (edição)
+	    if (txtId.getText() != null && !txtId.getText().trim().isEmpty()) {
+	        obj.setId(Utils.tryParseToInt(txtId.getText()));
+	    }
 
-		if (txtName.getText() == null || txtName.getText().trim().equals("")) {
-			exception.addError("name", "Field can't be empty");
-		}
-		obj.setName(txtName.getText());
-		
-		if (txtEmail.getText() == null || txtEmail.getText().trim().equals("")) {
-			exception.addError("email", "Field can't be empty");
-		}
-		obj.setEmail(txtEmail.getText());		
-		
-		if (dpBirthDate.getValue() == null) {
-			exception.addError("birthDate", "Field can't be empty");			
-		} else {
-			Instant instant = Instant.from(dpBirthDate.getValue().atStartOfDay(ZoneId.systemDefault()));
-			obj.setBirthDate(Date.from(instant));
-		}
-		
-		if (txtBaseSalary.getText() == null || txtBaseSalary.getText().trim().equals("")) {
-			exception.addError("baseSalary", "Field can't be empty");
-		}
-		obj.setBaseSalary(Utils.tryParseToDouble(txtBaseSalary.getText()));
-		
-		obj.setDepartment(comboBoxDepartment.getValue());
+	    if (txtName.getText() == null || txtName.getText().trim().equals("")) {
+	        exception.addError("name", "Field can't be empty");
+	    }
+	    obj.setName(txtName.getText());
+	    
+	    if (txtEmail.getText() == null || txtEmail.getText().trim().equals("")) {
+	        exception.addError("email", "Field can't be empty");
+	    }
+	    obj.setEmail(txtEmail.getText());       
+	    
+	    if (dpBirthDate.getValue() == null) {
+	        exception.addError("birthDate", "Field can't be empty");           
+	    } else {
+	        Instant instant = Instant.from(dpBirthDate.getValue().atStartOfDay(ZoneId.systemDefault()));
+	        obj.setBirthDate(Date.from(instant));
+	    }
+	    
+	    if (txtBaseSalary.getText() == null || txtBaseSalary.getText().trim().equals("")) {
+	        exception.addError("baseSalary", "Field can't be empty");
+	    }
+	    obj.setBaseSalary(Utils.tryParseToDouble(txtBaseSalary.getText()));
+	    
+	    obj.setDepartment(comboBoxDepartment.getValue());
 
-		if (exception.getErrors().size() > 0) {
-			throw exception;
-		}
-		return obj;
+	    if (exception.getErrors().size() > 0) {
+	        throw exception;
+	    }
+	    return obj;
 	}
 
 	@FXML
@@ -176,15 +174,14 @@ public class SellerFormController implements Initializable {
 	}
 
 	private void initializeNodes() {
-		// Libera a edição do campo ID para o usuário
-		txtId.setEditable(true);
-		
-		Constraints.setTextFieldInteger(txtId);
-		Constraints.setTextFieldMaxLength(txtName, 30);
-		Constraints.setTextFieldDouble(txtBaseSalary);
-		Constraints.setTextFieldMaxLength(txtEmail, 60);
-		Utils.formatDatePicker(dpBirthDate, "dd/MM/yyyy");
-		initializeComboBoxDepartment();
+	    // Bloqueia a edição do ID pois é gerado automaticamente pelo banco
+	    txtId.setEditable(false);
+	    
+	    Constraints.setTextFieldMaxLength(txtName, 30);
+	    Constraints.setTextFieldDouble(txtBaseSalary);
+	    Constraints.setTextFieldMaxLength(txtEmail, 60);
+	    Utils.formatDatePicker(dpBirthDate, "dd/MM/yyyy");
+	    initializeComboBoxDepartment();
 	}
 
 	public void updateFormData() {

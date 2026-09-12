@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  /* Garantindo transparência total no HTML e BODY */
+  html, body {
+    width: 100%;
+    height: 100%;
+    background-color: transparent !important;
+    background: transparent !important;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+  }
+
+  /* Container da Moeda 3D Girando */
+  .coin-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 120px;
+    perspective: 800px;
+    margin-bottom: 10px;
+  }
+  .coin {
+    width: 90px;
+    height: 90px;
+    position: relative;
+    transform-style: preserve-3d;
+    animation: spin 2.4s linear infinite;
+  }
+  .coin-face {
+    position: absolute;
+    width: 90px;
+    height: 90px;
+    border-radius: 50%;
+    background: radial-gradient(circle at 35% 30%, #ffe08a, #f0a825 55%, #b9760f 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    backface-visibility: hidden;
+    border: 3px solid #b9760f;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+  }
+  .coin-back {
+    transform: rotateY(180deg);
+  }
+  .coin-symbol {
+    font-size: 38px;
+    font-weight: bold;
+    color: #7a4d0a;
+    font-family: sans-serif;
+  }
+
+  /* SVG do Gráfico */
+  svg {
+    width: 100%;
+    height: 180px;
+    max-height: 100%;
+  }
+  .c-teal { fill: #0F6E56; }
+  .c-amber { fill: #EF9A9A; }
+  .th { fill: #ffffff; font-weight: bold; font-family: sans-serif; }
+
+  @keyframes spin { 
+    from { transform: rotateY(0deg); } 
+    to { transform: rotateY(360deg); } 
+  }
+  @keyframes grow1 { from { transform: scaleY(0.3); } to { transform: scaleY(0.5); } }
+  @keyframes grow2 { from { transform: scaleY(0.45); } to { transform: scaleY(0.7); } }
+  @keyframes grow3 { from { transform: scaleY(0.6); } to { transform: scaleY(0.85); } }
+  @keyframes grow4 { from { transform: scaleY(0.75); } to { transform: scaleY(1); } }
+  @keyframes grow5 { from { transform: scaleY(0.9); } to { transform: scaleY(1); } }
+  @keyframes draw { to { stroke-dashoffset: 0; } }
+  @keyframes pulse { 0%,100% { r: 20; } 50% { r: 24; } }
+</style>
+</head>
+<body>
+
+  <!-- Moeda Girando -->
+  <div class="coin-container">
+    <div class="coin">
+      <div class="coin-face">
+        <span class="coin-symbol">$</span>
+      </div>
+      <div class="coin-face coin-back">
+        <span class="coin-symbol">$</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Gráfico Animado -->
+  <svg viewBox="0 0 680 260" preserveAspectRatio="xMidYMid meet">
+    <defs>
+      <marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+        <path d="M2 1L8 5L2 9" fill="none" stroke="#0F6E56" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+      </marker>
+    </defs>
+    <g>
+      <rect x="80" y="0" width="60" height="220" class="c-teal" rx="4" style="transform-origin:80px 220px; animation: grow1 2.2s ease-in-out infinite alternate;"/>
+      <rect x="180" y="0" width="60" height="220" class="c-teal" rx="4" style="transform-origin:180px 220px; animation: grow2 2.2s ease-in-out infinite alternate;"/>
+      <rect x="280" y="0" width="60" height="220" class="c-teal" rx="4" style="transform-origin:280px 220px; animation: grow3 2.2s ease-in-out infinite alternate;"/>
+      <rect x="380" y="0" width="60" height="220" class="c-teal" rx="4" style="transform-origin:380px 220px; animation: grow4 2.2s ease-in-out infinite alternate;"/>
+      <rect x="480" y="0" width="60" height="220" class="c-teal" rx="4" style="transform-origin:480px 220px; animation: grow5 2.2s ease-in-out infinite alternate;"/>
+    </g>
+    <polyline points="110,190 210,150 310,110 410,70 510,30" fill="none" stroke="#0F6E56" stroke-width="4" marker-end="url(#arrow)" style="stroke-dasharray:600; stroke-dashoffset:600; animation: draw 2.5s ease-out forwards infinite;"/>
+    <circle cx="580" cy="40" r="22" class="c-amber" style="animation: pulse 1.8s ease-in-out infinite;"/>
+    <text x="580" y="46" text-anchor="middle" class="th" style="font-size:16px;">$</text>
+  </svg>
+
+</body>
+</html>

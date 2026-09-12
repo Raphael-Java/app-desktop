@@ -9,33 +9,41 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox prefHeight="391.0" prefWidth="535.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.SellerListController">
+<VBox prefHeight="600.0" prefWidth="900.0" spacing="12.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.SellerListController">
+   <padding>
+      <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
+   </padding>
    <children>
+      <!-- Título -->
       <Label text="Seller Registration">
          <font>
-            <Font name="Arial Bold Italic" size="17.0" />
+            <Font name="Segoe UI Bold" size="20.0" />
          </font>
-         <padding>
-            <Insets left="5.0" top="5.0" />
-         </padding>
       </Label>
-      <ToolBar prefHeight="40.0" prefWidth="200.0">
+
+      <!-- Barra de Ferramentas -->
+      <ToolBar style="-fx-background-color: transparent; -fx-padding: 0;">
         <items>
-          <Button fx:id="btNew" mnemonicParsing="false" onAction="#onBtNewAction" text="New" />
+          <Button fx:id="btNew" mnemonicParsing="false" onAction="#onBtNewAction" styleClass="btn-primary" text="+ New" />
+          <Button fx:id="btExportPdf" mnemonicParsing="false" onAction="#onBtExportPdfAction" styleClass="btn-export-pdf" text="📄 Exportar PDF" />
         </items>
       </ToolBar>
-      <TableView fx:id="tableViewSeller" prefHeight="202.0" prefWidth="513.0">
+
+      <!-- Tabela ocupando toda a largura e altura -->
+      <TableView fx:id="tableViewSeller" VBox.vgrow="ALWAYS">
         <columns>
-          <TableColumn fx:id="tableColumnId" prefWidth="76.10809224843979" text="Id" />
-          <TableColumn fx:id="tableColumnName" prefWidth="75.24329376220703" text="Name" />
-          <TableColumn fx:id="tableColumnEmail" prefWidth="75.0" text="Email" />
-          <TableColumn fx:id="tableColumnBirthDate" prefWidth="87.351318359375" text="Birth Date" />
-          <TableColumn fx:id="tableColumnBaseSalary" prefWidth="90.81085205078125" text="Base Salary" />
-          <TableColumn fx:id="tableColumnEDIT" minWidth="80.0" prefWidth="80.0" />
-          <TableColumn fx:id="tableColumnREMOVE" minWidth="80.0" prefWidth="80.0" />
-          <TableColumn fx:id="tableColumnPAY" text="PAY" />
+          <TableColumn fx:id="tableColumnId" minWidth="40.0" prefWidth="50.0" text="Id" />
+          <TableColumn fx:id="tableColumnName" minWidth="120.0" prefWidth="180.0" text="Name" />
+          <TableColumn fx:id="tableColumnEmail" minWidth="150.0" prefWidth="220.0" text="Email" />
+          <TableColumn fx:id="tableColumnBirthDate" minWidth="90.0" prefWidth="110.0" text="Birth Date" />
+          <TableColumn fx:id="tableColumnBaseSalary" minWidth="90.0" prefWidth="120.0" text="Base Salary" />
+          <TableColumn fx:id="tableColumnEDIT" minWidth="65.0" prefWidth="70.0" />
+          <TableColumn fx:id="tableColumnREMOVE" minWidth="75.0" prefWidth="80.0" />
+          <TableColumn fx:id="tableColumnPAY" minWidth="65.0" prefWidth="70.0" text="PAY" />
         </columns>
+        <columnResizePolicy>
+           <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+        </columnResizePolicy>
       </TableView>
    </children>
 </VBox>
-

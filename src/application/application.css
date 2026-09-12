@@ -1,67 +1,111 @@
-/* JavaFX CSS - Leave this comment until you have at least create one rule which uses -fx-Property */
+/* ==========================================================================
+   1. CONFIGURAÇÃO GERAL E TEMA ESCURO (DARK BACKGROUND)
+   ========================================================================== */
+.root {
+    -fx-font-family: 'Segoe UI', Helvetica, Arial, sans-serif;
+    -fx-background-color: #111827; /* Fundo geral escuro da janela */
+}
+
+/* --- MENU SUPERIOR AMPLIO (BRANCO) --- */
 .menu-bar {
-    -fx-font-size: 18px;
-    -fx-min-height: 18px;
+    -fx-background-color: #ffffff !important;
+    -fx-min-height: 48px !important; /* Altura ampliada */
+    -fx-pref-height: 48px !important;
+    -fx-padding: 0 10px !important;
+    -fx-alignment: CENTER_LEFT;
+    -fx-border-color: transparent transparent #e5e7eb transparent;
+}
+
+/* Rótulos dos Menus Principais */
+.menu-bar .menu {
+    -fx-padding: 8px 12px !important;
 }
 
 .menu-bar .label {
-    -fx-font-size: 18px;
+    -fx-text-fill: #1f2937 !important;
+    -fx-font-size: 15px !important; /* Fonte maior para os títulos do menu */
+    -fx-font-weight: bold !important;
+}
+
+/* Itens dentro dos Menus Suspensos (Dropdown) */
+.menu-bar .menu-item {
+    -fx-padding: 8px 16px !important;
 }
 
 .menu-bar .menu-item .label {
-    -fx-font-size: 18px;
+    -fx-text-fill: #1f2937 !important;
+    -fx-font-size: 14px !important;
+    -fx-font-weight: normal !important;
 }
 
-/* Fundo Geral da Tela de Login */
+/* Hover e foco nos menus */
+.menu-bar .menu:hover,
+.menu-bar .menu:showing,
+.menu-bar .menu-item:hover,
+.menu-bar .menu-item:focused {
+    -fx-background-color: #f3f4f6 !important;
+    -fx-background-radius: 4px;
+}
+
+/* Área Central e ScrollPane com Fundo Escuro */
+.scroll-pane, 
+.scroll-pane > .viewport,
+.content-area {
+    -fx-background-color: #111827 !important;
+}
+
+.scroll-pane {
+    -fx-border-color: transparent !important;
+}
+/* ==========================================================================
+   2. TELA DE LOGIN
+   ========================================================================== */
 .login-bg {
-    /* Define o fundo usando a imagem armazenada na pasta img */
     -fx-background-image: url("../img/bg-login.png");
     -fx-background-position: center center;
     -fx-background-repeat: no-repeat;
     -fx-background-size: cover;
 }
 
-/* Card Centralizado com Sombra e Borda Arredondada */
 .login-card {
     -fx-background-color: #ffffff;
     -fx-background-radius: 12px;
-    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.4), 20, 0, 0, 8);
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.15), 20, 0, 0, 8);
 }
 
-/* Textos de Titulo e Subtitulo */
 .login-title {
-    -fx-text-fill: #2c3e50;
+    -fx-text-fill: #111827;
+    -fx-font-weight: bold;
 }
 
 .login-subtitle {
-    -fx-text-fill: #7f8c8d;
+    -fx-text-fill: #6b7280;
     -fx-font-size: 12px;
 }
 
 .input-label {
-    -fx-text-fill: #34495e;
+    -fx-text-fill: #374151;
     -fx-font-weight: bold;
     -fx-font-size: 13px;
 }
 
-/* Inputs Bonitos com Foco */
 .custom-input {
     -fx-pref-height: 38px;
     -fx-background-radius: 6px;
     -fx-border-radius: 6px;
-    -fx-border-color: #bdc3c7;
+    -fx-border-color: #d1d5db;
     -fx-border-width: 1px;
-    -fx-background-color: #f8f9fa;
+    -fx-background-color: #f9fafb;
+    -fx-text-fill: #111827;
 }
 
 .custom-input:focused {
-    -fx-border-color: #3498db;
+    -fx-border-color: #3b82f6;
     -fx-background-color: #ffffff;
 }
 
-/* Botão Moderno com Efeito Hover */
 .btn-login {
-    -fx-background-color: #34495e;
+    -fx-background-color: #3b82f6;
     -fx-text-fill: white;
     -fx-font-weight: bold;
     -fx-font-size: 14px;
@@ -70,28 +114,33 @@
 }
 
 .btn-login:hover {
-    -fx-background-color: #2c3e50;
-}
-.btn-login:pressed {
-    -fx-background-color: #1f618d;
+    -fx-background-color: #2563eb;
 }
 
-/* Estilo do Menu Lateral (Esquerda) */
+.btn-login:pressed {
+    -fx-background-color: #1d4ed8;
+}
+
+/* ==========================================================================
+   3. MENU LATERAL (SIDEBAR ESQUERDA)
+   ========================================================================== */
 .sidebar {
-    -fx-background-color: #34495e;
+    -fx-background-color: #1f2937;
+    -fx-pref-width: 200px;
+    -fx-border-color: transparent #374151 transparent transparent;
 }
 
 .sidebar-section-title {
-    -fx-text-fill: #bdc3c7;
-    -fx-font-size: 11px;
+    -fx-text-fill: #6b7280;
+    -fx-font-size: 10px;
     -fx-font-weight: bold;
-    -fx-padding: 0 0 5px 15px;
+    -fx-padding: 15px 0 5px 15px;
 }
 
 .sidebar-btn {
     -fx-background-color: transparent;
-    -fx-text-fill: #ecf0f1;
-    -fx-font-size: 14px;
+    -fx-text-fill: #9ca3af;
+    -fx-font-size: 13px;
     -fx-alignment: BASELINE_LEFT;
     -fx-padding: 10px 15px;
     -fx-cursor: hand;
@@ -99,10 +148,197 @@
 }
 
 .sidebar-btn:hover {
-    -fx-background-color: #2c3e50;
-    -fx-text-fill: #3498db;
+    -fx-background-color: #374151;
+    -fx-text-fill: #ffffff;
 }
 
 .sidebar-btn:pressed {
-    -fx-background-color: #1abc9c;
+    -fx-background-color: #111827;
+}
+
+/* ==========================================================================
+   4. CARDS DE METRICAS (KPI DASHBOARD - MANTIDOS BRANCOS)
+   ========================================================================== */
+.kpi-card {
+    -fx-background-color: #ffffff !important;
+    -fx-background-radius: 12px;
+    -fx-padding: 16px;
+    -fx-alignment: CENTER_LEFT;
+    -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.15), 10, 0, 0, 4);
+}
+
+.kpi-title {
+    -fx-text-fill: #6b7280 !important;
+    -fx-font-size: 12px;
+    -fx-font-weight: bold;
+}
+
+.kpi-value {
+    -fx-text-fill: #111827 !important;
+    -fx-font-size: 20px;
+    -fx-font-weight: bold;
+}
+
+.banner-container {
+    -fx-background-color: transparent;
+}
+
+.banner-image {
+    -fx-background-radius: 12px;
+}
+
+/* ==========================================================================
+   5. BOTÕES DE AÇÃO SUPERIORES
+   ========================================================================== */
+.btn-primary {
+    -fx-background-color: #2563eb;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-font-size: 12px;
+    -fx-background-radius: 4px;
+    -fx-padding: 6px 14px;
+    -fx-cursor: hand;
+}
+
+.btn-primary:hover {
+    -fx-background-color: #1d4ed8;
+}
+
+.btn-export-pdf, .btn-success {
+    -fx-background-color: #16a34a;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-font-size: 12px;
+    -fx-background-radius: 4px;
+    -fx-padding: 6px 14px;
+    -fx-cursor: hand;
+}
+
+.btn-export-pdf:hover, .btn-success:hover {
+    -fx-background-color: #15803d;
+}
+
+/* ==========================================================================
+   6. TABLEVIEW (BRANCA COM ESTILO CLARO E ZEBRADO)
+   ========================================================================== */
+.table-view {
+    -fx-background-color: #ffffff !important;
+    -fx-border-color: #e2e8f0 !important;
+    -fx-border-radius: 6px !important;
+    -fx-background-radius: 6px !important;
+}
+
+/* Cabeçalho da Tabela */
+.table-view .column-header-background {
+    -fx-background-color: #f8fafc !important;
+    -fx-background-radius: 6px 6px 0 0 !important;
+    -fx-border-color: transparent transparent #e2e8f0 transparent !important;
+}
+
+.table-view .column-header, .table-view .filler {
+    -fx-background-color: transparent !important;
+    -fx-size: 38px;
+}
+
+.table-view .column-header .label {
+    -fx-text-fill: #334155 !important;
+    -fx-font-weight: bold !important;
+    -fx-font-size: 12px !important;
+    -fx-alignment: CENTER-LEFT !important;
+}
+
+/* Linhas e Células */
+.table-row-cell {
+    -fx-background-color: #ffffff !important;
+    -fx-border-color: transparent transparent #f1f5f9 transparent !important;
+    -fx-text-fill: #0f172a !important;
+}
+
+.table-row-cell:odd {
+    -fx-background-color: #f8fafc !important;
+}
+
+.table-row-cell:hover {
+    -fx-background-color: #f1f5f9 !important;
+}
+
+.table-row-cell:selected {
+    -fx-background-color: #e2e8f0 !important;
+    -fx-text-fill: #0f172a !important;
+}
+
+/* Botões de Ação na Tabela */
+.table-cell .button,
+.table-cell .button:focused,
+.table-cell .button:hover,
+.table-cell .button:pressed {
+    -fx-background-radius: 12px !important;
+    -fx-border-radius: 12px !important;
+    -fx-background-insets: 0 !important;
+    -fx-border-insets: 0 !important;
+    -fx-border-width: 0 !important;
+    -fx-padding: 3px 10px !important;
+    -fx-font-size: 10px !important;
+    -fx-font-weight: bold !important;
+    -fx-cursor: hand !important;
+}
+
+.btn-edit {
+    -fx-background-color: #3b82f6 !important;
+    -fx-text-fill: #ffffff !important;
+}
+.btn-edit:hover {
+    -fx-background-color: #2563eb !important;
+}
+
+.btn-remove {
+    -fx-background-color: #ef4444 !important;
+    -fx-text-fill: #ffffff !important;
+}
+.btn-remove:hover {
+    -fx-background-color: #dc2626 !important;
+}
+
+.btn-pay {
+    -fx-background-color: #10b981 !important;
+    -fx-text-fill: #ffffff !important;
+}
+.btn-pay:hover {
+    -fx-background-color: #059669 !important;
+}
+
+/* ==========================================================================
+   BARRA SUPERIOR E PERFIL DO USUÁRIO
+   ========================================================================== */
+.top-bar {
+    -fx-background-color: #ffffff;
+    -fx-border-color: transparent transparent #e5e7eb transparent;
+}
+
+.top-bar .menu-bar {
+    -fx-border-color: transparent !important;
+}
+
+.user-name {
+    -fx-text-fill: #1f2937;
+    -fx-font-size: 13px;
+    -fx-font-weight: bold;
+}
+
+.user-role {
+    -fx-text-fill: #6b7280;
+    -fx-font-size: 11px;
+}
+
+/* ==========================================================================
+   RODAPÉ (BARRA DE STATUS DO BANCO DE DADOS)
+   ========================================================================== */
+.status-bar {
+    -fx-background-color: #1f2937;
+    -fx-border-color: #374151 transparent transparent transparent;
+}
+
+.status-text {
+    -fx-text-fill: #9ca3af;
+    -fx-font-size: 11px;
 }

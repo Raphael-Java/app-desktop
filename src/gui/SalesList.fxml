@@ -6,32 +6,62 @@
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.ToolBar?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
+<?import javafx.scene.web.WebView?>
 
-<VBox prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.SalesListController">
+<VBox prefHeight="550.0" prefWidth="900.0" spacing="10.0" style="-fx-background-color: transparent;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.SalesListController">
+   <padding>
+      <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+   </padding>
    <children>
-      <Label text="Sales Record">
+      <!-- Cabeçalho -->
+      <Label text="Sales Record" textFill="WHITE">
          <font>
             <Font name="System Bold" size="18.0" />
          </font>
-         <padding>
-            <Insets left="10.0" top="10.0" />
-         </padding>
       </Label>
-      <ToolBar prefHeight="40.0" prefWidth="200.0">
+
+      <!-- Barra de Ferramentas -->
+      <ToolBar style="-fx-background-color: transparent; -fx-padding: 0;">
         <items>
-          <Button fx:id="btNew" mnemonicParsing="false" onAction="#onBtNewAction" text="New Sale" />
+          <Button fx:id="btNew" mnemonicParsing="false" onAction="#onBtNewAction" style="-fx-background-color: #2563eb; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 4px; -fx-cursor: hand;" text="+ New Sale" />
+          <Button fx:id="btExportPdf" mnemonicParsing="false" onAction="#onBtExportPdfAction" style="-fx-background-color: #16a34a; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 4px; -fx-cursor: hand;" text="📄 Exportar PDF" />
         </items>
       </ToolBar>
-      <TableView fx:id="tableViewSales" prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
-        <columns>
-          <TableColumn fx:id="tableColumnId" prefWidth="75.0" text="ID" />
-          <TableColumn fx:id="tableColumnDate" prefWidth="120.0" text="Date" />
-            <TableColumn fx:id="tableColumnAmount" prefWidth="100.0" text="Amount" />
-            <TableColumn fx:id="tableColumnStatus" prefWidth="100.0" text="Status" />
-            <TableColumn fx:id="tableColumnSeller" prefWidth="150.0" text="Seller" />
-        </columns>
-      </TableView>
+
+      <!-- Layout 3 Colunas -->
+      <HBox fillHeight="true" spacing="15.0" VBox.vgrow="ALWAYS">
+         <children>
+            <!-- 1. Tabela (Esquerda) -->
+            <TableView fx:id="tableViewSales" HBox.hgrow="ALWAYS">
+              <columns>
+                <TableColumn fx:id="tableColumnId" prefWidth="60.0" text="ID" />
+                <TableColumn fx:id="tableColumnDate" prefWidth="90.0" text="Date" />
+                <TableColumn fx:id="tableColumnAmount" prefWidth="90.0" text="Amount" />
+                <TableColumn fx:id="tableColumnStatus" prefWidth="75.0" text="Status" />
+                <TableColumn fx:id="tableColumnSeller" prefWidth="120.0" text="Seller" />
+              </columns>
+            </TableView>
+
+            <!-- 2. Imagem Off-Road (Central - Dentro de um StackPane para alinhamento correto) -->
+            <StackPane fx:id="imageContainer" HBox.hgrow="ALWAYS" VBox.vgrow="ALWAYS">
+               <children>
+                  <ImageView fx:id="imageViewOffroad" preserveRatio="true" pickOnBounds="true">
+                     <image>
+                        <Image url="@/img/offroad.png" />
+                     </image>
+                  </ImageView>
+               </children>
+            </StackPane>
+
+            <!-- 3. Gráfico (Direita) -->
+            <WebView fx:id="salesChartWebView" maxWidth="300.0" minWidth="200.0" prefWidth="240.0" style="-fx-background-color: transparent;" HBox.hgrow="NEVER" />
+         </children>
+      </HBox>
    </children>
 </VBox>

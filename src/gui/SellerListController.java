@@ -11,6 +11,8 @@ import application.Main;
 import db.DbIntegrityException;
 import gui.listeners.DataChangeListener;
 import gui.util.Alerts;
+import gui.util.Exporter;
+import gui.util.PdfExporter;
 import gui.util.Utils;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -74,13 +76,30 @@ public class SellerListController implements Initializable, DataChangeListener {
     @FXML
     private Button btNew;
 
+    @FXML
+    private Button btExportPdf;
+
     private ObservableList<Seller> obsList;
+
+    @FXML
+    public void onBtExportPdfAction() {
+        if (tableViewSeller != null && !tableViewSeller.getItems().isEmpty()) {
+            PdfExporter.exportToPDF(tableViewSeller, "Relatório de Vendedores", "vendedores");
+        } else {
+            Alerts.showAlert("Aviso", null, "Não há dados na tabela para exportar.", AlertType.WARNING);
+        }
+    }
 
     @FXML
     public void onBtNewAction(ActionEvent event) {
         Stage parentStage = Utils.currentStage(event);
         Seller obj = new Seller();
         createDialogForm(obj, "/gui/SellerForm.fxml", parentStage);
+    }
+
+    @FXML
+    public void onBtExportAction() {
+        Exporter.exportToCSV(tableViewSeller, "relatorio_vendedores");
     }
 
     public void setSellerService(SellerService service) {
@@ -96,7 +115,7 @@ public class SellerListController implements Initializable, DataChangeListener {
         tableColumnId.setCellValueFactory(new PropertyValueFactory<>("id"));
         tableColumnName.setCellValueFactory(new PropertyValueFactory<>("name"));
         tableColumnEmail.setCellValueFactory(new PropertyValueFactory<>("email"));
-        
+
         tableColumnBirthDate.setCellValueFactory(new PropertyValueFactory<>("birthDate"));
         Utils.formatTableColumnDate(tableColumnBirthDate, "dd/MM/yyyy");
 
@@ -106,7 +125,7 @@ public class SellerListController implements Initializable, DataChangeListener {
         Stage stage = (Stage) Main.getMainScene().getWindow();
         tableViewSeller.prefHeightProperty().bind(stage.heightProperty());
 
-        // Inicializa os botões das colunas apenas uma vez no carregamento
+        // Inicializa os botões das colunas
         initEditButtons();
         initRemoveButtons();
         initPayButtons();
@@ -164,12 +183,25 @@ public class SellerListController implements Initializable, DataChangeListener {
                     setGraphic(null);
                     return;
                 }
+                
+                button.setStyle(
+                    "-fx-background-color: #3b82f6; " +
+                    "-fx-text-fill: white; " +
+                    "-fx-background-radius: 10px; " +
+                    "-fx-border-radius: 10px; " +
+                    "-fx-font-weight: bold; " +
+                    "-fx-font-size: 11px; " +
+                    "-fx-padding: 3px 10px; " +
+                    "-fx-cursor: hand;"
+                );
+                
+                setStyle("-fx-alignment: CENTER;");
                 setGraphic(button);
                 button.setOnAction(event -> createDialogForm(obj, "/gui/SellerForm.fxml", Utils.currentStage(event)));
             }
         });
     }
-
+    
     private void initRemoveButtons() {
         tableColumnREMOVE.setCellValueFactory(param -> new ReadOnlyObjectWrapper<>(param.getValue()));
         tableColumnREMOVE.setCellFactory(param -> new TableCell<Seller, Seller>() {
@@ -182,6 +214,19 @@ public class SellerListController implements Initializable, DataChangeListener {
                     setGraphic(null);
                     return;
                 }
+                
+                button.setStyle(
+                    "-fx-background-color: #ef4444; " +
+                    "-fx-text-fill: white; " +
+                    "-fx-background-radius: 10px; " +
+                    "-fx-border-radius: 10px; " +
+                    "-fx-font-weight: bold; " +
+                    "-fx-font-size: 11px; " +
+                    "-fx-padding: 3px 10px; " +
+                    "-fx-cursor: hand;"
+                );
+                
+                setStyle("-fx-alignment: CENTER;");
                 setGraphic(button);
                 button.setOnAction(event -> removeEntity(obj));
             }
@@ -215,12 +260,25 @@ public class SellerListController implements Initializable, DataChangeListener {
                     setGraphic(null);
                     return;
                 }
+                
+                button.setStyle(
+                    "-fx-background-color: #10b981; " +
+                    "-fx-text-fill: white; " +
+                    "-fx-background-radius: 10px; " +
+                    "-fx-border-radius: 10px; " +
+                    "-fx-font-weight: bold; " +
+                    "-fx-font-size: 11px; " +
+                    "-fx-padding: 3px 10px; " +
+                    "-fx-cursor: hand;"
+                );
+                
+                setStyle("-fx-alignment: CENTER;");
                 setGraphic(button);
                 button.setOnAction(event -> paySeller(obj));
             }
         });
     }
-
+    
     private void paySeller(Seller seller) {
         double salary = seller.getBaseSalary();
         double oldBalance = BalanceService.getBalance();
@@ -250,14 +308,14 @@ public class SellerListController implements Initializable, DataChangeListener {
         stage.setScene(new Scene(pane));
         stage.show();
 
-        int steps = 100; // Limita a animação a 100 passos fixos para ser rápida e fluida
+        int steps = 100;
         double stepValue = (oldBalance - newBalance) / steps;
         Timeline timeline = new Timeline();
 
         for (int i = 0; i <= steps; i++) {
             double currentBalance = oldBalance - (i * stepValue);
             KeyFrame keyFrame = new KeyFrame(
-                    Duration.millis(i * 15), 
+                    Duration.millis(i * 15),
                     event -> label.setText(String.format("Saldo: R$ %.2f", currentBalance))
             );
             timeline.getKeyFrames().add(keyFrame);

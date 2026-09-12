@@ -3,6 +3,7 @@ package gui;
 import java.net.URL;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.ResourceBundle;
 import java.util.stream.Collectors;
 
@@ -41,45 +42,74 @@ public class DashboardController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        // Carrega automaticamente ao inicializar a View
         loadDashboardData();
     }
 
     public void loadDashboardData() {
-        List<Seller> sellers = sellerService.findAll();
-        List<Department> departments = departmentService.findAll();
+        try {
+            if (sellerService == null || departmentService == null) {
+                return;
+            }
 
-        // 1. Atualiza os Cards de KPIs
-        lblTotalSellers.setText(String.valueOf(sellers.size()));
-        lblTotalDepartments.setText(String.valueOf(departments.size()));
+            List<Seller> sellers = sellerService.findAll();
+            List<Department> departments = departmentService.findAll();
 
-        double totalPayroll = sellers.stream()
-                .mapToDouble(Seller::getBaseSalary)
-                .sum();
-        lblTotalPayroll.setText(String.format("R$ %.2f", totalPayroll));
+            if (sellers == null || departments == null) {
+                return;
+            }
 
-        // 2. Preenche o Gráfico de Pizza (Vendedores por Departamento)
-        Map<String, Long> sellersPerDep = sellers.stream()
-                .collect(Collectors.groupingBy(s -> s.getDepartment().getName(), Collectors.counting()));
+            // 1. Atualiza os Cards de KPIs
+            if (lblTotalSellers != null) {
+                lblTotalSellers.setText(String.valueOf(sellers.size()));
+            }
+            if (lblTotalDepartments != null) {
+                lblTotalDepartments.setText(String.valueOf(departments.size()));
+            }
 
-        ObservableList<PieChart.Data> pieData = FXCollections.observableArrayList();
-        sellersPerDep.forEach((depName, count) -> pieData.add(new PieChart.Data(depName, count)));
-        pieChartDepartments.setData(pieData);
+            double totalPayroll = sellers.stream()
+                    .filter(Objects::nonNull)
+                    .mapToDouble(s -> s.getBaseSalary() != null ? s.getBaseSalary() : 0.0)
+                    .sum();
+            
+            if (lblTotalPayroll != null) {
+                lblTotalPayroll.setText(String.format("R$ %.2f", totalPayroll));
+            }
 
-        // 3. Preenche o Gráfico de Barras (Média Salarial por Departamento)
-        Map<String, Double> avgSalaryPerDep = sellers.stream()
-                .collect(Collectors.groupingBy(
-                        s -> s.getDepartment().getName(),
-                        Collectors.averagingDouble(Seller::getBaseSalary)
-                ));
+            // 2. Preenche o Gráfico de Pizza (Vendedores por Departamento) Protegido contra NULL
+            Map<String, Long> sellersPerDep = sellers.stream()
+                    .filter(s -> s != null && s.getDepartment() != null && s.getDepartment().getName() != null)
+                    .collect(Collectors.groupingBy(s -> s.getDepartment().getName(), Collectors.counting()));
 
-        XYChart.Series<String, Number> series = new XYChart.Series<>();
-        series.setName("Média Salarial");
+            if (pieChartDepartments != null) {
+                ObservableList<PieChart.Data> pieData = FXCollections.observableArrayList();
+                sellersPerDep.forEach((depName, count) -> pieData.add(new PieChart.Data(depName, count)));
+                pieChartDepartments.setData(pieData);
+            }
 
-        avgSalaryPerDep.forEach((depName, avgSalary) -> {
-            series.getData().add(new XYChart.Data<>(depName, avgSalary));
-        });
+            // 3. Preenche o Gráfico de Barras (Média Salarial por Departamento) Protegido contra NULL
+            Map<String, Double> avgSalaryPerDep = sellers.stream()
+                    .filter(s -> s != null && s.getDepartment() != null && s.getDepartment().getName() != null)
+                    .collect(Collectors.groupingBy(
+                            s -> s.getDepartment().getName(),
+                            Collectors.averagingDouble(s -> s.getBaseSalary() != null ? s.getBaseSalary() : 0.0)
+                    ));
 
-        barChartSalaries.getData().clear();
-        barChartSalaries.getData().add(series);
+            if (barChartSalaries != null) {
+                barChartSalaries.getData().clear();
+                XYChart.Series<String, Number> series = new XYChart.Series<>();
+                series.setName("Média Salarial");
+
+                avgSalaryPerDep.forEach((depName, avgSalary) -> {
+                    series.getData().add(new XYChart.Data<>(depName, avgSalary));
+                });
+
+                barChartSalaries.getData().add(series);
+            }
+
+        } catch (Exception e) {
+            System.err.println("Erro ao carregar dados do Dashboard: " + e.getMessage());
+            e.printStackTrace();
+        }
     }
 }

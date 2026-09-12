@@ -1,17 +1,19 @@
 package gui;
 
 import java.net.URL;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 import gui.util.Alerts;
+import gui.util.DataBackup;
 import gui.AppSettings;
-import gui.util.Utils;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.RadioButton;
 
@@ -23,6 +25,19 @@ public class SettingsViewController implements Initializable {
     @FXML private ComboBox<String> comboLanguage;
     @FXML private Button btSave;
     @FXML private Button btCancel;
+    
+    @FXML
+    public void onBtBackupAction() {
+        DataBackup.executeBackup();
+    }
+
+    @FXML
+    public void onBtRestoreAction() {
+        Optional<ButtonType> result = Alerts.showConfirmation("Atenção", "Deseja realmente sobrescrever os dados atuais pelo backup?");
+        if (result.isPresent() && result.get() == ButtonType.OK) {
+            DataBackup.restoreBackup();
+        }
+    }
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -53,7 +68,6 @@ public class SettingsViewController implements Initializable {
 
     @FXML
     public void onBtCancelAction(ActionEvent event) {
-        // Exemplo para voltar para o Dashboard ao cancelar
         MainViewController mainController = new MainViewController();
         mainController.onMenuItemDashboardAction();
     }

@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<VBox spacing="15.0" style="-fx-background-color: #1e293b; -fx-padding: 20;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.ShippingModalController">
+   <children>
+      <Label text="🚚 Calcular Frete" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="18.0" />
+         </font>
+      </Label>
+      
+      <VBox spacing="5.0">
+         <children>
+            <Label text="Região de Entrega:" textFill="WHITE" />
+            <ComboBox fx:id="comboBoxRegion" maxWidth="1.7976931348623157E308" promptText="Selecione a Região" />
+         </children>
+      </VBox>
+
+      <VBox spacing="5.0">
+         <children>
+            <Label text="Peso Estimado (kg):" textFill="WHITE" />
+            <TextField fx:id="txtWeight" promptText="Ex: 1.5" />
+         </children>
+      </VBox>
+
+      <VBox spacing="5.0">
+         <children>
+            <Label text="Valor Atual do Pedido (R$):" textFill="WHITE" />
+            <TextField fx:id="txtTotalAmount" promptText="0.00" />
+         </children>
+      </VBox>
+
+      <HBox alignment="CENTER_LEFT" spacing="10.0" style="-fx-background-color: #0f172a; -fx-padding: 10; -fx-background-radius: 6;">
+         <children>
+            <Label text="VALOR DO FRETE:" textFill="WHITE">
+               <font>
+                  <Font size="13.0" />
+               </font>
+            </Label>
+            <Label fx:id="lblShippingCost" text="R$ 0,00" textFill="#38bdf8">
+               <font>
+                  <Font name="System Bold" size="16.0" />
+               </font>
+            </Label>
+         </children>
+      </HBox>
+
+      <HBox alignment="CENTER_RIGHT" spacing="10.0">
+         <children>
+            <Button mnemonicParsing="false" onAction="#onBtCalculateAction" style="-fx-background-color: #3b82f6; -fx-text-fill: white;" text="Calcular" />
+            <Button mnemonicParsing="false" onAction="#onBtCloseAction" text="Fechar" />
+         </children>
+      </HBox>
+   </children>
+</VBox>

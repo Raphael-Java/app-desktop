@@ -26,4 +26,9 @@ public class SellerService {
 	public void remove(Seller obj) {
 		dao.deleteById(obj.getId());
 	}
+
+	public Seller findByEmail(String username) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

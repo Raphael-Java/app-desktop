@@ -2,55 +2,128 @@ package gui;
 
 import java.io.IOException;
 import java.net.URL;
+import java.sql.Connection;
 import java.util.ResourceBundle;
 import java.util.function.Consumer;
 
 import application.Main;
+import application.UserSession;
+import db.DB;
 import gui.util.Alerts;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.Label;
+import javafx.scene.control.Menu;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Circle;
+import javafx.stage.Stage;
 import model.services.DepartmentService;
 import model.services.SalesService;
 import model.services.SellerService;
 
 public class MainViewController implements Initializable {
 
+    // Menus Principais
+    @FXML private Menu menuRegistration;
+
+    // Itens do Menu
     @FXML private MenuItem menuItemHome;
     @FXML private MenuItem menuItemSeller;
     @FXML private MenuItem menuItemDepartment;
     @FXML private MenuItem menuItemSales;
+    @FXML private MenuItem menuItemNewSale;
     @FXML private MenuItem menuItemAbout;
 
+    // Componentes de Layout
     @FXML private ImageView logoImage;
     @FXML private AnchorPane anchorPane;
     @FXML private VBox mainContainer;
+    @FXML private HBox cardsContainer;
+    
+    // Labels dos Cards da Home
+    @FXML private Label lblTodaySales;
+    @FXML private Label lblMonthTotal;
+    @FXML private Label lblActiveSellers;
+    @FXML private Label lblAverageTicket;
+    
+    // Status do Usuário no Topo
+    @FXML private Label lblUserName;
+    @FXML private Label lblUserRole;
+    @FXML private ImageView imgUserAvatar;
+
+    // Status do Banco de Dados no Rodapé
+    @FXML private Circle circleDbStatus;
+    @FXML private Label lblDbStatus;
 
     @FXML
     public void onMenuItemHomeAction() {
         if (mainContainer != null) {
             mainContainer.getChildren().clear();
-            mainContainer.getChildren().add(anchorPane);
+            
+            if (cardsContainer != null) {
+                mainContainer.getChildren().add(cardsContainer);
+            }
+            
+            if (anchorPane != null) {
+                mainContainer.getChildren().add(anchorPane);
+            }
+
+            updateDashboardCards(1250.00, 45280.00, 5, 85.50);
         }
     }
-
+    
     @FXML
     public void onBtReportsAction() {
         loadView("/gui/ReportsView.fxml", (ReportsViewController controller) -> {});
     }
     
     @FXML
+    public void onBtExportPdfAction() {
+        loadView("/gui/SellerList.fxml", (SellerListController controller) -> {
+            controller.setSellerService(new SellerService());
+            controller.updateTableView();
+            
+            Platform.runLater(() -> {
+                controller.onBtExportPdfAction();
+            });
+        });
+    }   
+    
+    @FXML
     public void onBtNotificationsAction() {
-        Alerts.showAlert("Atalho", null, "Sem novas notificações", AlertType.INFORMATION);
+        StringBuilder notifs = new StringBuilder();
+
+        double totalMes = 45280.00;
+        double metaMes = 50000.00;
+        
+        if (totalMes >= metaMes) {
+            notifs.append("🎉 META ATINGIDA! Parabéns à equipe.\n\n");
+        } else {
+            double restante = metaMes - totalMes;
+            notifs.append(String.format("🎯 Faltam R$ %.2f para atingir a meta do mês!\n\n", restante));
+        }
+
+        int vendedoresAtivos = 5;
+        if (vendedoresAtivos < 3) {
+            notifs.append("⚠️ AVISO: Equipe com número baixo de vendedores ativos.\n\n");
+        }
+
+        notifs.append("📌 Lembrete: Fechamento de comissões na próxima sexta-feira.");
+
+        Alerts.showAlert("Central de Notificações", "Alertas do Sistema", notifs.toString(), AlertType.INFORMATION);
     }
 
     @FXML
@@ -60,9 +133,7 @@ public class MainViewController implements Initializable {
 
     @FXML
     public void onMenuItemDashboardAction() {
-        loadView("/gui/DashboardView.fxml", (DashboardController controller) -> {
-            controller.loadDashboardData();
-        });
+        loadView("/gui/DashboardView.fxml", (DashboardController controller) -> {});
     }
 
     @FXML
@@ -88,32 +159,104 @@ public class MainViewController implements Initializable {
             controller.updateTableView();
         });
     }
+
+    @FXML
+    public void onMenuItemNewSaleAction() {
+        loadView("/gui/SalesForm.fxml", (SalesFormController controller) -> {});
+    }
     
     @FXML
     public void onBtSettingsAction() {
-        loadView("/gui/SettingsView.fxml", (SettingsViewController controller) -> {
-            // Se precisar passar serviços para a tela de configurações no futuro
-        });
+        loadView("/gui/SettingsView.fxml", (SettingsViewController controller) -> {});
     }
 
     @FXML
     public void onMenuItemAboutAction() {
         loadView("/gui/About.fxml", x -> {});
     }
+    
+    @FXML
+    public void onBtCalculateShippingAction() {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/ShippingModal.fxml"));
+            VBox parent = loader.load();
+            
+            Stage stage = new Stage();
+            stage.setTitle("Calculadora de Frete");
+            stage.setScene(new Scene(parent));
+            stage.initModality(javafx.stage.Modality.APPLICATION_MODAL);
+            stage.setResizable(false);
+            stage.showAndWait();
+        } catch (IOException e) {
+            Alerts.showAlert("Erro", "Erro ao abrir calculador de frete", e.getMessage(), AlertType.ERROR);
+        }
+    }
 
     @Override
-    public void initialize(URL arg0, ResourceBundle arg1) {
+    public void initialize(URL location, ResourceBundle resources) {
+        initializeLogoImage();
+        updateDashboardCards(1250.00, 45280.00, 5, 85.50);
+        
+        loadUserSessionData();
+        checkDatabaseConnection();
+    }
+
+    private void loadUserSessionData() {
+        UserSession session = UserSession.getInstance();
+        
+        if (session != null && session.getLoggedUser() != null) {
+            if (lblUserName != null) lblUserName.setText(session.getLoggedUser().getName());
+            if (lblUserRole != null) lblUserRole.setText(session.isAdmin() ? "Administrador" : "Operador");
+        } else {
+            if (lblUserName != null) lblUserName.setText("Lucas Silva");
+            if (lblUserRole != null) lblUserRole.setText("Administrador");
+        }
+        
+        applyPermissions();
+    }
+
+    private void checkDatabaseConnection() {
+        if (circleDbStatus == null || lblDbStatus == null) return;
+
+        try {
+            Connection conn = DB.getConnection();
+            if (conn != null && !conn.isClosed()) {
+                circleDbStatus.setFill(Color.web("#22c55e"));
+                lblDbStatus.setText("Conectado ao Banco de Dados");
+            } else {
+                setDbDisconnectedStatus();
+            }
+        } catch (Exception e) {
+            setDbDisconnectedStatus();
+        }
+    }
+
+    private void setDbDisconnectedStatus() {
+        if (circleDbStatus != null) circleDbStatus.setFill(Color.web("#ef4444"));
+        if (lblDbStatus != null) lblDbStatus.setText("Desconectado do Banco de Dados");
+    }
+
+    public void updateDashboardCards(double todaySales, double monthTotal, int sellersCount, double avgTicket) {
+        if (lblTodaySales != null) lblTodaySales.setText(String.format("R$ %.2f", todaySales));
+        if (lblMonthTotal != null) lblMonthTotal.setText(String.format("R$ %.2f", monthTotal));
+        if (lblActiveSellers != null) lblActiveSellers.setText(String.valueOf(sellersCount));
+        if (lblAverageTicket != null) lblAverageTicket.setText(String.format("R$ %.2f", avgTicket));
+    }
+
+    private void initializeLogoImage() {
         if (logoImage != null && anchorPane != null) {
             try {
                 Image image = new Image(
-                    getClass().getResourceAsStream("/img/Gemini_Generated_Image_h5a0jvh5a0jvh5a0.png")
+                    getClass().getResourceAsStream("/img/office_work.png")
                 );
 
                 logoImage.setImage(image);
                 logoImage.setPreserveRatio(false);
 
+                VBox.setVgrow(anchorPane, Priority.ALWAYS);
+
                 anchorPane.setMinSize(0, 0);
-                anchorPane.setPrefSize(0, 0);
+                anchorPane.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
 
                 logoImage.fitWidthProperty().bind(anchorPane.widthProperty());
                 logoImage.fitHeightProperty().bind(anchorPane.heightProperty());
@@ -123,10 +266,22 @@ public class MainViewController implements Initializable {
         }
     }
 
+    private void applyPermissions() {
+        if (menuRegistration != null) {
+            menuRegistration.setVisible(true);
+        }
+        if (menuItemSeller != null) {
+            menuItemSeller.setDisable(false);
+        }
+    }
+
     private synchronized <T> void loadView(String absoluteName, Consumer<T> initializingAction) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource(absoluteName));
             VBox newVBox = loader.load();
+
+            T controller = loader.getController();
+            initializingAction.accept(controller);
 
             Scene mainScene = Main.getMainScene();
             
@@ -139,9 +294,6 @@ public class MainViewController implements Initializable {
 
             mainVBox.getChildren().clear();
             mainVBox.getChildren().addAll(newVBox.getChildren());
-
-            T controller = loader.getController();
-            initializingAction.accept(controller);
 
         } catch (IOException e) {
             Alerts.showAlert("IO Exception", "Error loading view", e.getMessage(), AlertType.ERROR);
