@@ -3,6 +3,7 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.chart.BarChart?>
 <?import javafx.scene.chart.CategoryAxis?>
+<?import javafx.scene.chart.LineChart?>
 <?import javafx.scene.chart.NumberAxis?>
 <?import javafx.scene.chart.PieChart?>
 <?import javafx.scene.control.Label?>
@@ -20,15 +21,16 @@
                   <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
                </padding>
                <children>
-                  <Label text="Dashboard Geral">
+                  <Label text="Dashboard Geral" textFill="WHITE">
                      <font>
                         <Font name="System Bold" size="20.0" />
                      </font>
                   </Label>
                   
-                  <HBox alignment="CENTER" spacing="15.0">
+                  <!-- BANNER DE CARDS (KPIs) -->
+                  <HBox alignment="CENTER" spacing="12.0">
                      <children>
-                        <VBox alignment="CENTER" prefHeight="70.0" prefWidth="170.0" style="-fx-background-color: #3498db; -fx-background-radius: 8;">
+                        <VBox alignment="CENTER" prefHeight="70.0" prefWidth="150.0" style="-fx-background-color: #3498db; -fx-background-radius: 8;">
                            <children>
                               <Label text="Total Vendedores" textFill="WHITE" />
                               <Label fx:id="lblTotalSellers" text="0" textFill="WHITE">
@@ -38,9 +40,9 @@
                               </Label>
                            </children>
                         </VBox>
-                        <VBox alignment="CENTER" prefHeight="70.0" prefWidth="170.0" style="-fx-background-color: #2ecc71; -fx-background-radius: 8;">
+                        <VBox alignment="CENTER" prefHeight="70.0" prefWidth="150.0" style="-fx-background-color: #2ecc71; -fx-background-radius: 8;">
                            <children>
-                              <Label text="Total Departamentos" textFill="WHITE" />
+                              <Label text="Total Deptos" textFill="WHITE" />
                               <Label fx:id="lblTotalDepartments" text="0" textFill="WHITE">
                                  <font>
                                     <Font name="System Bold" size="20.0" />
@@ -48,12 +50,32 @@
                               </Label>
                            </children>
                         </VBox>
-                        <VBox alignment="CENTER" prefHeight="70.0" prefWidth="200.0" style="-fx-background-color: #e74c3c; -fx-background-radius: 8;">
+                        <VBox alignment="CENTER" prefHeight="70.0" prefWidth="160.0" style="-fx-background-color: #e74c3c; -fx-background-radius: 8;">
                            <children>
                               <Label text="Folha Salarial Total" textFill="WHITE" />
                               <Label fx:id="lblTotalPayroll" text="R$ 0,00" textFill="WHITE">
                                  <font>
-                                    <Font name="System Bold" size="18.0" />
+                                    <Font name="System Bold" size="16.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                        </VBox>
+                        <VBox alignment="CENTER" prefHeight="70.0" prefWidth="160.0" style="-fx-background-color: #8e44ad; -fx-background-radius: 8;">
+                           <children>
+                              <Label text="Ticket Médio / Vend." textFill="WHITE" />
+                              <Label fx:id="lblTicketMedio" text="R$ 0,00" textFill="WHITE">
+                                 <font>
+                                    <Font name="System Bold" size="16.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                        </VBox>
+                        <VBox alignment="CENTER" prefHeight="70.0" prefWidth="140.0" style="-fx-background-color: #00a8ff; -fx-background-radius: 8;">
+                           <children>
+                              <Label text="ROI da Equipe" textFill="WHITE" />
+                              <Label fx:id="lblRoiEquipe" text="0.0x" textFill="WHITE">
+                                 <font>
+                                    <Font name="System Bold" size="20.0" />
                                  </font>
                               </Label>
                            </children>
@@ -61,6 +83,7 @@
                      </children>
                   </HBox>
 
+                  <!-- PRIMEIRA LINHA DE GRÁFICOS (PIZZA E BARRAS) -->
                   <HBox alignment="CENTER" spacing="15.0">
                      <children>
                         <PieChart fx:id="pieChartDepartments" maxHeight="250.0" prefHeight="250.0" prefWidth="350.0" title="Vendedores por Departamento" />
@@ -74,6 +97,21 @@
                         </BarChart>
                      </children>
                   </HBox>
+
+                  <!-- SEGUNDA LINHA DE GRÁFICOS (EVOLUÇÃO DO FATURAMENTO) -->
+                  <HBox alignment="CENTER" spacing="15.0">
+                     <children>
+                        <LineChart fx:id="lineChartSalesHistory" maxHeight="280.0" prefHeight="280.0" prefWidth="745.0" title="Evolução do Faturamento Mensal (R$)">
+                          <xAxis>
+                            <CategoryAxis label="Mês" side="BOTTOM" />
+                          </xAxis>
+                          <yAxis>
+                            <NumberAxis label="Faturamento (R$)" side="LEFT" />
+                          </yAxis>
+                        </LineChart>
+                     </children>
+                  </HBox>
+
                </children>
             </VBox>
          </content>

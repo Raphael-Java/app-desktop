@@ -342,3 +342,50 @@
     -fx-text-fill: #9ca3af;
     -fx-font-size: 11px;
 }
+
+/* ==========================================================================
+   7. AJUSTES VISUAIS DOS GRÁFICOS (DARK MODE)
+   ========================================================================== */
+.chart {
+    -fx-padding: 10px;
+}
+
+.chart-title {
+    -fx-text-fill: #f3f4f6 !important;
+    -fx-font-size: 14px !important;
+    -fx-font-weight: bold !important;
+}
+
+.axis-label {
+    -fx-text-fill: #9ca3af !important;
+}
+
+.axis {
+    -fx-tick-label-fill: #d1d5db !important;
+}
+
+.chart-legend {
+    -fx-background-color: transparent !important;
+}
+
+.chart-legend-item {
+    -fx-text-fill: #e5e7eb !important;
+}
+
+.chart-pie-label {
+    -fx-fill: #ffffff !important;
+    -fx-font-size: 11px !important;
+}
+
+/* Estilo da Linha do Gráfico de Evolução */
+.chart-series-line {
+    -fx-stroke: #2ecc71 !important; /* Cor verde para representar faturamento */
+    -fx-stroke-width: 3px !important;
+}
+
+/* Estilo dos Pontos na Linha */
+.default-color0.chart-line-symbol {
+    -fx-background-color: #27ae60, #ffffff !important;
+    -fx-background-radius: 5px !important;
+    -fx-padding: 5px !important;
+}

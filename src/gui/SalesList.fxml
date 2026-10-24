@@ -14,9 +14,9 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.web.WebView?>
 
-<VBox prefHeight="550.0" prefWidth="900.0" spacing="10.0" style="-fx-background-color: transparent;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.SalesListController">
+<VBox minHeight="0.0" minWidth="0.0" spacing="10.0" style="-fx-background-color: transparent;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.SalesListController" VBox.vgrow="ALWAYS">
    <padding>
-      <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+      <Insets bottom="5.0" left="10.0" right="10.0" top="5.0" />
    </padding>
    <children>
       <!-- Cabeçalho -->
@@ -34,24 +34,34 @@
         </items>
       </ToolBar>
 
-      <!-- Layout 3 Colunas -->
-      <HBox fillHeight="true" spacing="15.0" VBox.vgrow="ALWAYS">
+      <!-- Layout 3 Colunas com fx:id para o clip arredondado -->
+      <HBox fx:id="salesHBox" fillHeight="true" minHeight="0.0" spacing="0.0" VBox.vgrow="ALWAYS">
          <children>
             <!-- 1. Tabela (Esquerda) -->
-            <TableView fx:id="tableViewSales" HBox.hgrow="ALWAYS">
+            <TableView fx:id="tableViewSales" minHeight="0.0" minWidth="300.0" HBox.hgrow="ALWAYS">
+              <columnResizePolicy>
+                 <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+              </columnResizePolicy>
               <columns>
-                <TableColumn fx:id="tableColumnId" prefWidth="60.0" text="ID" />
+                <TableColumn fx:id="tableColumnId" prefWidth="50.0" text="ID" />
                 <TableColumn fx:id="tableColumnDate" prefWidth="90.0" text="Date" />
-                <TableColumn fx:id="tableColumnAmount" prefWidth="90.0" text="Amount" />
-                <TableColumn fx:id="tableColumnStatus" prefWidth="75.0" text="Status" />
-                <TableColumn fx:id="tableColumnSeller" prefWidth="120.0" text="Seller" />
+                <TableColumn fx:id="tableColumnAmount" prefWidth="100.0" text="Amount" />
+                <TableColumn fx:id="tableColumnStatus" prefWidth="80.0" text="Status" />
+                <TableColumn fx:id="tableColumnSeller" prefWidth="130.0" text="Seller" />
               </columns>
             </TableView>
 
-            <!-- 2. Imagem Off-Road (Central - Dentro de um StackPane para alinhamento correto) -->
-            <StackPane fx:id="imageContainer" HBox.hgrow="ALWAYS" VBox.vgrow="ALWAYS">
+            <!-- 2. Imagem Off-Road (Centro - Colada) -->
+            <StackPane fx:id="imageContainer" 
+                       maxWidth="450.0" 
+                       minHeight="0.0" 
+                       minWidth="300.0" 
+                       prefWidth="380.0" 
+                       style="-fx-background-color: transparent; -fx-padding: 0;" 
+                       HBox.hgrow="NEVER" 
+                       VBox.vgrow="ALWAYS">
                <children>
-                  <ImageView fx:id="imageViewOffroad" preserveRatio="true" pickOnBounds="true">
+                  <ImageView fx:id="imageViewOffroad" preserveRatio="false">
                      <image>
                         <Image url="@/img/offroad.png" />
                      </image>
@@ -59,8 +69,14 @@
                </children>
             </StackPane>
 
-            <!-- 3. Gráfico (Direita) -->
-            <WebView fx:id="salesChartWebView" maxWidth="300.0" minWidth="200.0" prefWidth="240.0" style="-fx-background-color: transparent;" HBox.hgrow="NEVER" />
+            <!-- 3. Gráfico WebView (Direita - Colado) -->
+            <WebView fx:id="salesChartWebView" 
+                     maxWidth="200.0" 
+                     minHeight="0.0" 
+                     minWidth="150.0" 
+                     prefWidth="180.0" 
+                     style="-fx-background-color: transparent;" 
+                     HBox.hgrow="NEVER" />
          </children>
       </HBox>
    </children>

@@ -72,11 +72,11 @@ public class LoginController {
 
         // Mock para teste rápido de Admin/User caso não ache no banco
         if ("admin".equalsIgnoreCase(username) && "1234".equals(password)) {
-            Seller adminUser = new Seller(1, "Administrador", "admin@gmail.com", null, 5000.0, new Department(1, "TI"));
+        	Seller adminUser = new Seller(1, "Administrador", "admin@gmail.com", null, 5000.0, new Department(1, "TI", "Gerente TI"));
             adminUser.setRole("ADMIN");
             return adminUser;
         } else if ("user".equalsIgnoreCase(username) && "1234".equals(password)) {
-            Seller commonUser = new Seller(2, "Vendedor Comum", "user@gmail.com", null, 2500.0, new Department(2, "Vendas"));
+        	Seller commonUser = new Seller(2, "Vendedor Comum", "user@gmail.com", null, 2500.0, new Department(2, "Vendas", "Gerente Vendas"));
             commonUser.setRole("USER");
             return commonUser;
         }

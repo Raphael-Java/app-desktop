@@ -27,6 +27,7 @@ import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -46,6 +47,13 @@ public class DepartmentListController implements Initializable, DataChangeListen
 	@FXML
 	private TableColumn<Department, String> tableColumnName;
 
+	// NOVAS COLUNAS DECLARADAS AQUI
+	@FXML
+	private TableColumn<Department, String> tableColumnManager;
+
+	@FXML
+	private TableColumn<Department, Integer> tableColumnSellersCount;
+
 	@FXML
 	private TableColumn<Department, Department> tableColumnEDIT;
 
@@ -57,6 +65,9 @@ public class DepartmentListController implements Initializable, DataChangeListen
 
 	@FXML
 	private Label labelCount;
+
+	@FXML
+	private ImageView imageViewCar;
 
 	private ObservableList<Department> obsList;
 
@@ -80,8 +91,28 @@ public class DepartmentListController implements Initializable, DataChangeListen
 		tableColumnId.setCellValueFactory(new PropertyValueFactory<>("id"));
 		tableColumnName.setCellValueFactory(new PropertyValueFactory<>("name"));
 
+		// MAPEAMENTO DAS NOVAS COLUNAS DENTRO DO MÉTODOS
+		if (tableColumnManager != null) {
+			tableColumnManager.setCellValueFactory(new PropertyValueFactory<>("managerName"));
+		}
+
+		if (tableColumnSellersCount != null) {
+			tableColumnSellersCount.setCellValueFactory(
+				param -> new ReadOnlyObjectWrapper<>(param.getValue().getSellersCount())
+			);
+		}
+
 		Stage stage = (Stage) Main.getMainScene().getWindow();
 		tableViewDepartment.prefHeightProperty().bind(stage.heightProperty());
+
+		// Configuração para preencher a proporção total
+		if (imageViewCar != null) {
+			imageViewCar.setPreserveRatio(false);
+			if (imageViewCar.getParent() instanceof Pane) {
+				Pane parent = (Pane) imageViewCar.getParent();
+				imageViewCar.fitWidthProperty().bind(parent.widthProperty().subtract(30)); // Desconta os paddings
+			}
+		}
 	}
 
 	public void updateTableView() {
@@ -94,7 +125,6 @@ public class DepartmentListController implements Initializable, DataChangeListen
 
 		tableViewDepartment.setItems(obsList);
 		
-		// Atualiza o contador de departamentos dinamicamente
 		if (labelCount != null) {
 			int total = list.size();
 			labelCount.setText("Total: " + total + (total == 1 ? " departamento" : " departamentos"));

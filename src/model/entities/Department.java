@@ -1,19 +1,31 @@
 package model.entities;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Department implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	private Integer id;
 	private String name;
+	private String managerName; // Nome do Gestor do Setor
+	
+	// Lista de vendedores para contar a quantidade
+	private List<Seller> sellers = new ArrayList<>();
 	
 	public Department() {
 	}
 
 	public Department(Integer id, String name) {
+	    this.id = id;
+	    this.name = name;
+	}
+	
+	public Department(Integer id, String name, String managerName) {
 		this.id = id;
 		this.name = name;
+		this.managerName = managerName;
 	}
 
 	public Integer getId() {
@@ -30,6 +42,31 @@ public class Department implements Serializable {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	public String getManagerName() {
+		return managerName;
+	}
+
+	public void setManagerName(String managerName) {
+		this.managerName = managerName;
+	}
+
+	public List<Seller> getSellers() {
+		return sellers;
+	}
+
+	// Método auxiliar para obter a quantidade de vendedores no JavaFX
+	public int getSellersCount() {
+		return sellers != null ? sellers.size() : 0;
+	}
+
+	public void addSeller(Seller seller) {
+		sellers.add(seller);
+	}
+
+	public void removeSeller(Seller seller) {
+		sellers.remove(seller);
 	}
 
 	@Override
@@ -59,6 +96,6 @@ public class Department implements Serializable {
 
 	@Override
 	public String toString() {
-		return "Department [id=" + id + ", name=" + name + "]";
+		return "Department [id=" + id + ", name=" + name + ", managerName=" + managerName + "]";
 	}
 }

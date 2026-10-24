@@ -14,6 +14,7 @@ import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Label;
@@ -29,6 +30,7 @@ import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import model.services.DepartmentService;
 import model.services.SalesService;
@@ -68,28 +70,75 @@ public class MainViewController implements Initializable {
     @FXML private Circle circleDbStatus;
     @FXML private Label lblDbStatus;
 
+    // Guarda a referência exata da estrutura da Home carregada no início
+    private Node homeNode;
+
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        // Salva o VBox da Home logo que a tela carrega
+        this.homeNode = mainContainer;
+
+        initializeLogoImage();
+        updateDashboardCards(1250.00, 45280.00, 5, 85.50);
+        
+        loadUserSessionData();
+        checkDatabaseConnection();
+    }
+
+    // -------------------------------------------------------------
+    // ATALHOS RÁPIDOS (Menu Lateral Esquerdo)
+    // -------------------------------------------------------------
+
+    @FXML
+    public void onBtCadastrarClienteAction() {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/CadastroCliente.fxml"));
+            VBox parent = loader.load();
+
+            Stage stage = new Stage();
+            stage.setTitle("Cadastrar Novo Cliente");
+            stage.setScene(new Scene(parent));
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.setResizable(false);
+            stage.showAndWait();
+        } catch (IOException e) {
+            Alerts.showAlert("Erro", "Erro ao carregar formulário de cliente", e.getMessage(), AlertType.ERROR);
+        }
+    }
+
+    @FXML
+    public void onBtConsultarEstoqueAction() {
+        loadView("/gui/ConsultaEstoque.fxml", (Object controller) -> {});
+    }
+
+    @FXML
+    public void onMenuItemCalculatorAction() {
+        loadView("/gui/CalculatorView.fxml", (Object controller) -> {});
+    }
+    
+    @FXML
+    public void onBtCalculadoraAction() {
+        // Alterado para carregar a calculadora interna em vez do executável do Windows
+        loadView("/gui/CalculatorView.fxml", (Object controller) -> {});
+    }
+
+    // -------------------------------------------------------------
+    // AÇÕES DE MENUS E NAVEGAÇÃO
+    // -------------------------------------------------------------
+
     @FXML
     public void onMenuItemHomeAction() {
-        if (mainContainer != null) {
-            mainContainer.getChildren().clear();
-            
-            if (cardsContainer != null) {
-                mainContainer.getChildren().add(cardsContainer);
-            }
-            
-            if (anchorPane != null) {
-                mainContainer.getChildren().add(anchorPane);
-            }
-
+        if (homeNode != null) {
+            setMainContent(homeNode);
             updateDashboardCards(1250.00, 45280.00, 5, 85.50);
         }
     }
-    
+
     @FXML
     public void onBtReportsAction() {
         loadView("/gui/ReportsView.fxml", (ReportsViewController controller) -> {});
     }
-    
+
     @FXML
     public void onBtExportPdfAction() {
         loadView("/gui/SellerList.fxml", (SellerListController controller) -> {
@@ -100,8 +149,8 @@ public class MainViewController implements Initializable {
                 controller.onBtExportPdfAction();
             });
         });
-    }   
-    
+    }    
+
     @FXML
     public void onBtNotificationsAction() {
         StringBuilder notifs = new StringBuilder();
@@ -151,7 +200,7 @@ public class MainViewController implements Initializable {
             controller.updateTableView();
         });
     }
-    
+
     @FXML
     public void onMenuItemSalesAction() {
         loadView("/gui/SalesList.fxml", (SalesListController controller) -> {
@@ -164,7 +213,7 @@ public class MainViewController implements Initializable {
     public void onMenuItemNewSaleAction() {
         loadView("/gui/SalesForm.fxml", (SalesFormController controller) -> {});
     }
-    
+
     @FXML
     public void onBtSettingsAction() {
         loadView("/gui/SettingsView.fxml", (SettingsViewController controller) -> {});
@@ -174,7 +223,7 @@ public class MainViewController implements Initializable {
     public void onMenuItemAboutAction() {
         loadView("/gui/About.fxml", x -> {});
     }
-    
+
     @FXML
     public void onBtCalculateShippingAction() {
         try {
@@ -184,7 +233,7 @@ public class MainViewController implements Initializable {
             Stage stage = new Stage();
             stage.setTitle("Calculadora de Frete");
             stage.setScene(new Scene(parent));
-            stage.initModality(javafx.stage.Modality.APPLICATION_MODAL);
+            stage.initModality(Modality.APPLICATION_MODAL);
             stage.setResizable(false);
             stage.showAndWait();
         } catch (IOException e) {
@@ -192,14 +241,9 @@ public class MainViewController implements Initializable {
         }
     }
 
-    @Override
-    public void initialize(URL location, ResourceBundle resources) {
-        initializeLogoImage();
-        updateDashboardCards(1250.00, 45280.00, 5, 85.50);
-        
-        loadUserSessionData();
-        checkDatabaseConnection();
-    }
+    // -------------------------------------------------------------
+    // MÉTODOS AUXILIARES
+    // -------------------------------------------------------------
 
     private void loadUserSessionData() {
         UserSession session = UserSession.getInstance();
@@ -275,28 +319,38 @@ public class MainViewController implements Initializable {
         }
     }
 
+    // Carrega um FXML externo e insere no ScrollPane central
     private synchronized <T> void loadView(String absoluteName, Consumer<T> initializingAction) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource(absoluteName));
             VBox newVBox = loader.load();
 
-            T controller = loader.getController();
-            initializingAction.accept(controller);
+            T controller = loader.getController(); // ou loader.getController()
+            initializingAction.accept(loader.getController());
 
-            Scene mainScene = Main.getMainScene();
-            
-            VBox mainVBox = mainContainer;
-            if (mainVBox == null) {
-                BorderPane borderPane = (BorderPane) mainScene.getRoot();
-                ScrollPane scrollPane = (ScrollPane) borderPane.getCenter();
-                mainVBox = (VBox) scrollPane.getContent();
-            }
-
-            mainVBox.getChildren().clear();
-            mainVBox.getChildren().addAll(newVBox.getChildren());
+            setMainContent(newVBox);
 
         } catch (IOException e) {
             Alerts.showAlert("IO Exception", "Error loading view", e.getMessage(), AlertType.ERROR);
+        }
+    }
+
+    // Método centralizado para trocar o conteúdo do ScrollPane e remover a barra de rolagem
+    private void setMainContent(Node node) {
+        Scene mainScene = Main.getMainScene();
+        if (mainScene != null && mainScene.getRoot() instanceof BorderPane) {
+            BorderPane borderPane = (BorderPane) mainScene.getRoot();
+            
+            if (borderPane.getCenter() instanceof ScrollPane) {
+                ScrollPane scrollPane = (ScrollPane) borderPane.getCenter();
+
+                scrollPane.setFitToWidth(true);
+                scrollPane.setFitToHeight(true);
+                scrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
+                scrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
+
+                scrollPane.setContent(node);
+            }
         }
     }
 }
