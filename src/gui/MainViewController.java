@@ -320,15 +320,16 @@ public class MainViewController implements Initializable {
     }
 
     // Carrega um FXML externo e insere no ScrollPane central
+ // Carrega um FXML externo e insere no ScrollPane central
     private synchronized <T> void loadView(String absoluteName, Consumer<T> initializingAction) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource(absoluteName));
-            VBox newVBox = loader.load();
+            Node newContent = loader.load(); // Alterado de VBox para Node para suportar HBox (Calculadora)
 
-            T controller = loader.getController(); // ou loader.getController()
-            initializingAction.accept(loader.getController());
+            T controller = loader.getController();
+            initializingAction.accept(controller);
 
-            setMainContent(newVBox);
+            setMainContent(newContent);
 
         } catch (IOException e) {
             Alerts.showAlert("IO Exception", "Error loading view", e.getMessage(), AlertType.ERROR);

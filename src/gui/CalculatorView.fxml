@@ -1,19 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.CalculatorController">
+<HBox alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" spacing="20.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.CalculatorController">
    <children>
-      <!-- Caixa centralizada da calculadora com largura máxima fixa para não espalhar -->
-      <VBox alignment="CENTER" maxWidth="300.0" spacing="12.0" style="-fx-background-color: #1e293b; -fx-background-radius: 12px; -fx-padding: 20px;">
+      <!-- Calculadora (Lado Esquerdo) -->
+      <VBox alignment="CENTER" maxWidth="300.0" spacing="12.0" style="-fx-background-color: #0f172a; -fx-background-radius: 16px; -fx-padding: 20px; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.4), 15, 0, 0, 4);">
          <children>
             <!-- Visor -->
-            <TextField fx:id="txtDisplay" alignment="CENTER_RIGHT" editable="false" prefHeight="50.0" style="-fx-font-size: 22px; -fx-font-weight: bold; -fx-background-radius: 6px;" text="0" />
+            <TextField fx:id="txtDisplay" alignment="CENTER_RIGHT" editable="false" prefHeight="55.0" style="-fx-font-size: 24px; -fx-font-weight: bold; -fx-background-radius: 8px; -fx-background-color: #1e293b; -fx-text-fill: #f8fafc;" text="0" />
             
             <!-- Grid de Botões -->
             <GridPane hgap="8.0" vgap="8.0">
@@ -31,35 +34,60 @@
                   <RowConstraints minHeight="10.0" prefHeight="45.0" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
-                  <!-- Linha 0: C e / -->
-                  <Button maxWidth="1.7976931348623157E308" maxHeight="1.7976931348623157E308" mnemonicParsing="false" onAction="#onBtnClearPressed" style="-fx-font-size: 15px; -fx-font-weight: bold; -fx-background-color: #ef4444; -fx-text-fill: white; -fx-background-radius: 6px;" text="C" GridPane.columnIndex="0" GridPane.columnSpan="3" GridPane.rowIndex="0" />
-                  <Button maxWidth="1.7976931348623157E308" maxHeight="1.7976931348623157E308" mnemonicParsing="false" onAction="#onBtnOperationPressed" style="-fx-font-size: 15px; -fx-font-weight: bold; -fx-background-color: #3b82f6; -fx-text-fill: white; -fx-background-radius: 6px;" text="/" GridPane.columnIndex="3" GridPane.rowIndex="0" />
+                  <Button maxWidth="1.7976931348623157E308" maxHeight="1.7976931348623157E308" mnemonicParsing="false" onAction="#onBtnClearPressed" style="-fx-font-size: 14px; -fx-font-weight: bold; -fx-background-color: #ef4444; -fx-text-fill: white; -fx-background-radius: 6px; -fx-cursor: hand;" text="C" GridPane.columnIndex="0" GridPane.rowIndex="0" />
+                  <Button maxWidth="1.7976931348623157E308" maxHeight="1.7976931348623157E308" mnemonicParsing="false" onAction="#onBtnBackSpacePressed" style="-fx-font-size: 14px; -fx-font-weight: bold; -fx-background-color: #475569; -fx-text-fill: white; -fx-background-radius: 6px; -fx-cursor: hand;" text="⌫" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="0" />
+                  <Button maxWidth="1.7976931348623157E308" maxHeight="1.7976931348623157E308" mnemonicParsing="false" onAction="#onBtnOperationPressed" style="-fx-font-size: 16px; -fx-font-weight: bold; -fx-background-color: #3b82f6; -fx-text-fill: white; -fx-background-radius: 6px; -fx-cursor: hand;" text="÷" GridPane.columnIndex="3" GridPane.rowIndex="0" />
                   
-                  <!-- Linha 1: 7, 8, 9, * -->
-                  <Button maxWidth="1.7976931348623157E308" maxHeight="1.7976931348623157E308" mnemonicParsing="false" onAction="#onBtnNumberPressed" style="-fx-font-size: 15px; -fx-background-color: #334155; -fx-text-fill: white; -fx-background-radius: 6px;" text="7" GridPane.columnIndex="0" GridPane.rowIndex="1" />
-                  <Button maxWidth="1.7976931348623157E308" maxHeight="1.7976931348623157E308" mnemonicParsing="false" onAction="#onBtnNumberPressed" style="-fx-font-size: 15px; -fx-background-color: #334155; -fx-text-fill: white; -fx-background-radius: 6px;" text="8" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                  <Button maxWidth="1.7976931348623157E308" maxHeight="1.7976931348623157E308" mnemonicParsing="false" onAction="#onBtnNumberPressed" style="-fx-font-size: 15px; -fx-background-color: #334155; -fx-text-fill: white; -fx-background-radius: 6px;" text="9" GridPane.columnIndex="2" GridPane.rowIndex="1" />
-                  <Button maxWidth="1.7976931348623157E308" maxHeight="1.7976931348623157E308" mnemonicParsing="false" onAction="#onBtnOperationPressed" style="-fx-font-size: 15px; -fx-font-weight: bold; -fx-background-color: #3b82f6; -fx-text-fill: white; -fx-background-radius: 6px;" text="*" GridPane.columnIndex="3" GridPane.rowIndex="1" />
+                  <Button maxWidth="1.7976931348623157E308" maxHeight="1.7976931348623157E308" mnemonicParsing="false" onAction="#onBtnNumberPressed" style="-fx-font-size: 15px; -fx-background-color: #334155; -fx-text-fill: white; -fx-background-radius: 6px; -fx-cursor: hand;" text="7" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+                  <Button maxWidth="1.7976931348623157E308" maxHeight="1.7976931348623157E308" mnemonicParsing="false" onAction="#onBtnNumberPressed" style="-fx-font-size: 15px; -fx-background-color: #334155; -fx-text-fill: white; -fx-background-radius: 6px; -fx-cursor: hand;" text="8" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                  <Button maxWidth="1.7976931348623157E308" maxHeight="1.7976931348623157E308" mnemonicParsing="false" onAction="#onBtnNumberPressed" style="-fx-font-size: 15px; -fx-background-color: #334155; -fx-text-fill: white; -fx-background-radius: 6px; -fx-cursor: hand;" text="9" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+                  <Button maxWidth="1.7976931348623157E308" maxHeight="1.7976931348623157E308" mnemonicParsing="false" onAction="#onBtnOperationPressed" style="-fx-font-size: 16px; -fx-font-weight: bold; -fx-background-color: #3b82f6; -fx-text-fill: white; -fx-background-radius: 6px; -fx-cursor: hand;" text="×" GridPane.columnIndex="3" GridPane.rowIndex="1" />
                   
-                  <!-- Linha 2: 4, 5, 6, - -->
-                  <Button maxWidth="1.7976931348623157E308" maxHeight="1.7976931348623157E308" mnemonicParsing="false" onAction="#onBtnNumberPressed" style="-fx-font-size: 15px; -fx-background-color: #334155; -fx-text-fill: white; -fx-background-radius: 6px;" text="4" GridPane.columnIndex="0" GridPane.rowIndex="2" />
-                  <Button maxWidth="1.7976931348623157E308" maxHeight="1.7976931348623157E308" mnemonicParsing="false" onAction="#onBtnNumberPressed" style="-fx-font-size: 15px; -fx-background-color: #334155; -fx-text-fill: white; -fx-background-radius: 6px;" text="5" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                  <Button maxWidth="1.7976931348623157E308" maxHeight="1.7976931348623157E308" mnemonicParsing="false" onAction="#onBtnNumberPressed" style="-fx-font-size: 15px; -fx-background-color: #334155; -fx-text-fill: white; -fx-background-radius: 6px;" text="6" GridPane.columnIndex="2" GridPane.rowIndex="2" />
-                  <Button maxWidth="1.7976931348623157E308" maxHeight="1.7976931348623157E308" mnemonicParsing="false" onAction="#onBtnOperationPressed" style="-fx-font-size: 15px; -fx-font-weight: bold; -fx-background-color: #3b82f6; -fx-text-fill: white; -fx-background-radius: 6px;" text="-" GridPane.columnIndex="3" GridPane.rowIndex="2" />
+                  <Button maxWidth="1.7976931348623157E308" maxHeight="1.7976931348623157E308" mnemonicParsing="false" onAction="#onBtnNumberPressed" style="-fx-font-size: 15px; -fx-background-color: #334155; -fx-text-fill: white; -fx-background-radius: 6px; -fx-cursor: hand;" text="4" GridPane.columnIndex="0" GridPane.rowIndex="2" />
+                  <Button maxWidth="1.7976931348623157E308" maxHeight="1.7976931348623157E308" mnemonicParsing="false" onAction="#onBtnNumberPressed" style="-fx-font-size: 15px; -fx-background-color: #334155; -fx-text-fill: white; -fx-background-radius: 6px; -fx-cursor: hand;" text="5" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                  <Button maxWidth="1.7976931348623157E308" maxHeight="1.7976931348623157E308" mnemonicParsing="false" onAction="#onBtnNumberPressed" style="-fx-font-size: 15px; -fx-background-color: #334155; -fx-text-fill: white; -fx-background-radius: 6px; -fx-cursor: hand;" text="6" GridPane.columnIndex="2" GridPane.rowIndex="2" />
+                  <Button maxWidth="1.7976931348623157E308" maxHeight="1.7976931348623157E308" mnemonicParsing="false" onAction="#onBtnOperationPressed" style="-fx-font-size: 16px; -fx-font-weight: bold; -fx-background-color: #3b82f6; -fx-text-fill: white; -fx-background-radius: 6px; -fx-cursor: hand;" text="-" GridPane.columnIndex="3" GridPane.rowIndex="2" />
                   
-                  <!-- Linha 3: 1, 2, 3, + -->
-                  <Button maxWidth="1.7976931348623157E308" maxHeight="1.7976931348623157E308" mnemonicParsing="false" onAction="#onBtnNumberPressed" style="-fx-font-size: 15px; -fx-background-color: #334155; -fx-text-fill: white; -fx-background-radius: 6px;" text="1" GridPane.columnIndex="0" GridPane.rowIndex="3" />
-                  <Button maxWidth="1.7976931348623157E308" maxHeight="1.7976931348623157E308" mnemonicParsing="false" onAction="#onBtnNumberPressed" style="-fx-font-size: 15px; -fx-background-color: #334155; -fx-text-fill: white; -fx-background-radius: 6px;" text="2" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-                  <Button maxWidth="1.7976931348623157E308" maxHeight="1.7976931348623157E308" mnemonicParsing="false" onAction="#onBtnNumberPressed" style="-fx-font-size: 15px; -fx-background-color: #334155; -fx-text-fill: white; -fx-background-radius: 6px;" text="3" GridPane.columnIndex="2" GridPane.rowIndex="3" />
-                  <Button maxWidth="1.7976931348623157E308" maxHeight="1.7976931348623157E308" mnemonicParsing="false" onAction="#onBtnOperationPressed" style="-fx-font-size: 15px; -fx-font-weight: bold; -fx-background-color: #3b82f6; -fx-text-fill: white; -fx-background-radius: 6px;" text="+" GridPane.columnIndex="3" GridPane.rowIndex="3" />
+                  <Button maxWidth="1.7976931348623157E308" maxHeight="1.7976931348623157E308" mnemonicParsing="false" onAction="#onBtnNumberPressed" style="-fx-font-size: 15px; -fx-background-color: #334155; -fx-text-fill: white; -fx-background-radius: 6px; -fx-cursor: hand;" text="1" GridPane.columnIndex="0" GridPane.rowIndex="3" />
+                  <Button maxWidth="1.7976931348623157E308" maxHeight="1.7976931348623157E308" mnemonicParsing="false" onAction="#onBtnNumberPressed" style="-fx-font-size: 15px; -fx-background-color: #334155; -fx-text-fill: white; -fx-background-radius: 6px; -fx-cursor: hand;" text="2" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                  <Button maxWidth="1.7976931348623157E308" maxHeight="1.7976931348623157E308" mnemonicParsing="false" onAction="#onBtnNumberPressed" style="-fx-font-size: 15px; -fx-background-color: #334155; -fx-text-fill: white; -fx-background-radius: 6px; -fx-cursor: hand;" text="3" GridPane.columnIndex="2" GridPane.rowIndex="3" />
+                  <Button maxWidth="1.7976931348623157E308" maxHeight="1.7976931348623157E308" mnemonicParsing="false" onAction="#onBtnOperationPressed" style="-fx-font-size: 16px; -fx-font-weight: bold; -fx-background-color: #3b82f6; -fx-text-fill: white; -fx-background-radius: 6px; -fx-cursor: hand;" text="+" GridPane.columnIndex="3" GridPane.rowIndex="3" />
                   
-                  <!-- Linha 4: 0, . , = -->
-                  <Button maxWidth="1.7976931348623157E308" maxHeight="1.7976931348623157E308" mnemonicParsing="false" onAction="#onBtnNumberPressed" style="-fx-font-size: 15px; -fx-background-color: #334155; -fx-text-fill: white; -fx-background-radius: 6px;" text="0" GridPane.columnIndex="0" GridPane.columnSpan="2" GridPane.rowIndex="4" />
-                  <Button maxWidth="1.7976931348623157E308" maxHeight="1.7976931348623157E308" mnemonicParsing="false" onAction="#onBtnDecimalPressed" style="-fx-font-size: 15px; -fx-background-color: #334155; -fx-text-fill: white; -fx-background-radius: 6px;" text="." GridPane.columnIndex="2" GridPane.rowIndex="4" />
-                  <Button maxWidth="1.7976931348623157E308" maxHeight="1.7976931348623157E308" mnemonicParsing="false" onAction="#onBtnEqualsPressed" style="-fx-font-size: 15px; -fx-font-weight: bold; -fx-background-color: #22c55e; -fx-text-fill: white; -fx-background-radius: 6px;" text="=" GridPane.columnIndex="3" GridPane.rowIndex="4" />
+                  <Button maxWidth="1.7976931348623157E308" maxHeight="1.7976931348623157E308" mnemonicParsing="false" onAction="#onBtnNumberPressed" style="-fx-font-size: 15px; -fx-background-color: #334155; -fx-text-fill: white; -fx-background-radius: 6px; -fx-cursor: hand;" text="0" GridPane.columnIndex="0" GridPane.columnSpan="2" GridPane.rowIndex="4" />
+                  <Button maxWidth="1.7976931348623157E308" maxHeight="1.7976931348623157E308" mnemonicParsing="false" onAction="#onBtnDecimalPressed" style="-fx-font-size: 15px; -fx-background-color: #334155; -fx-text-fill: white; -fx-background-radius: 6px; -fx-cursor: hand;" text="." GridPane.columnIndex="2" GridPane.rowIndex="4" />
+                  <Button maxWidth="1.7976931348623157E308" maxHeight="1.7976931348623157E308" mnemonicParsing="false" onAction="#onBtnEqualsPressed" style="-fx-font-size: 16px; -fx-font-weight: bold; -fx-background-color: #22c55e; -fx-text-fill: white; -fx-background-radius: 6px; -fx-cursor: hand;" text="=" GridPane.columnIndex="3" GridPane.rowIndex="4" />
+               </children>
+            </GridPane>
+         </children>
+      </VBox>
+
+      <!-- Painel Lateral: Histórico + Atalhos Comerciais (Lado Direito) -->
+      <VBox alignment="TOP_LEFT" prefWidth="240.0" spacing="12.0" style="-fx-background-color: #0f172a; -fx-background-radius: 16px; -fx-padding: 20px; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.4), 15, 0, 0, 4);">
+         <children>
+            <!-- Secção de Histórico -->
+            <Label text="Histórico" textFill="#f8fafc" style="-fx-font-size: 15px; -fx-font-weight: bold;" />
+            <ListView fx:id="historyListView" prefHeight="150.0" style="-fx-background-color: #1e293b; -fx-control-inner-background: #1e293b; -fx-background-radius: 8px;" />
+            <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onBtnClearHistoryPressed" style="-fx-font-size: 12px; -fx-background-color: #334155; -fx-text-fill: white; -fx-background-radius: 6px; -fx-cursor: hand;" text="Limpar Histórico" />
+
+            <!-- Secção de Atalhos Comerciais -->
+            <Label text="Atalhos Comerciais" textFill="#f8fafc" style="-fx-font-size: 15px; -fx-font-weight: bold;" />
+            <GridPane hgap="6.0" vgap="6.0">
+              <columnConstraints>
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="95.0" />
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="95.0" />
+              </columnConstraints>
+              <rowConstraints>
+                <RowConstraints minHeight="10.0" prefHeight="35.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="35.0" vgrow="SOMETIMES" />
+              </rowConstraints>
+               <children>
+                  <Button maxWidth="1.7976931348623157E308" maxHeight="1.7976931348623157E308" mnemonicParsing="false" onAction="#onBtnCommercialPressed" style="-fx-font-size: 13px; -fx-background-color: #0d9488; -fx-text-fill: white; -fx-background-radius: 6px; -fx-cursor: hand;" text="-10%" GridPane.columnIndex="0" GridPane.rowIndex="0" />
+                  <Button maxWidth="1.7976931348623157E308" maxHeight="1.7976931348623157E308" mnemonicParsing="false" onAction="#onBtnCommercialPressed" style="-fx-font-size: 13px; -fx-background-color: #0d9488; -fx-text-fill: white; -fx-background-radius: 6px; -fx-cursor: hand;" text="-20%" GridPane.columnIndex="1" GridPane.rowIndex="0" />
+                  <Button maxWidth="1.7976931348623157E308" maxHeight="1.7976931348623157E308" mnemonicParsing="false" onAction="#onBtnCommercialPressed" style="-fx-font-size: 13px; -fx-background-color: #0d9488; -fx-text-fill: white; -fx-background-radius: 6px; -fx-cursor: hand;" text="+15%" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+                  <Button maxWidth="1.7976931348623157E308" maxHeight="1.7976931348623157E308" mnemonicParsing="false" onAction="#onBtnCommercialPressed" style="-fx-font-size: 13px; -fx-background-color: #0d9488; -fx-text-fill: white; -fx-background-radius: 6px; -fx-cursor: hand;" text="+23% IVA" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                </children>
             </GridPane>
          </children>
       </VBox>
    </children>
-</VBox>
+</HBox>
