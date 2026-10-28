@@ -8,66 +8,141 @@
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox prefWidth="500.0" spacing="15.0" style="-fx-background-color: #1e2530; -fx-padding: 20;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.CadastroClienteController">
+<VBox spacing="20.0" style="-fx-background-color: #151a21; -fx-padding: 30;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.CadastroClienteController">
    <children>
-      <!-- Cabeçalho -->
-      <Label style="-fx-font-size: 20px; -fx-font-weight: bold; -fx-text-fill: #ffffff;" text="👤 Cadastrar Novo Cliente" />
-      <Label style="-fx-font-size: 12px; -fx-text-fill: #a0a5b5;" text="Preencha os dados do cliente abaixo" />
-
-      <!-- Formulário com GridPane -->
-      <GridPane hgap="10.0" vgap="12.0">
-        <columnConstraints>
-          <ColumnConstraints hgrow="SOMETIMES" minWidth="100.0" prefWidth="120.0" />
-          <ColumnConstraints hgrow="ALWAYS" minWidth="200.0" />
-        </columnConstraints>
-        <rowConstraints>
-          <RowConstraints minHeight="30.0" vgrow="SOMETIMES" />
-          <RowConstraints minHeight="30.0" vgrow="SOMETIMES" />
-          <RowConstraints minHeight="30.0" vgrow="SOMETIMES" />
-          <RowConstraints minHeight="30.0" vgrow="SOMETIMES" />
-          <RowConstraints minHeight="30.0" vgrow="SOMETIMES" />
-        </rowConstraints>
+      <!-- Cabeçalho da Página -->
+      <VBox spacing="4.0">
          <children>
-            <!-- Nome Completo -->
-            <Label style="-fx-text-fill: #ffffff;" text="Nome Completo *" GridPane.rowIndex="0" />
-            <TextField fx:id="txtNome" promptText="Ex: João da Silva" GridPane.columnIndex="1" GridPane.rowIndex="0" />
-
-            <!-- CPF / CNPJ -->
-            <Label style="-fx-text-fill: #ffffff;" text="CPF / CNPJ *" GridPane.rowIndex="1" />
-            <TextField fx:id="txtDocumento" promptText="000.000.000-00" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-
-            <!-- E-mail -->
-            <Label style="-fx-text-fill: #ffffff;" text="E-mail" GridPane.rowIndex="2" />
-            <TextField fx:id="txtEmail" promptText="cliente@email.com" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-
-            <!-- Telefone / WhatsApp -->
-            <Label style="-fx-text-fill: #ffffff;" text="Telefone" GridPane.rowIndex="3" />
-            <TextField fx:id="txtTelefone" promptText="(00) 90000-0000" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-
-            <!-- Status do Cliente -->
-            <Label style="-fx-text-fill: #ffffff;" text="Status" GridPane.rowIndex="4" />
-            <ComboBox fx:id="cbStatus" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+            <Label style="-fx-font-size: 22px; -fx-font-weight: bold; -fx-text-fill: #ffffff;" text="🚗 Gestão de Clientes / Novo Lead" />
+            <Label style="-fx-font-size: 13px; -fx-text-fill: #8c96a5;" text="Preencha as informações cadastrais e o perfil de interesse do cliente para a concessionária." />
          </children>
-         <VBox.margin>
-            <Insets top="10.0" />
-         </VBox.margin>
-      </GridPane>
+      </VBox>
+
+      <!-- Cartão / Container do Formulário -->
+      <VBox spacing="20.0" style="-fx-background-color: #1e2530; -fx-background-radius: 8; -fx-padding: 25; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.3), 10, 0, 0, 4);">
+         <children>
+            
+            <!-- Seção 1: Dados Pessoais -->
+            <VBox spacing="10.0">
+               <children>
+                  <Label style="-fx-font-size: 14px; -fx-font-weight: bold; -fx-text-fill: #38bdf8;" text="📋 Informações Pessoais" />
+                  <GridPane hgap="20.0" vgap="12.0">
+                    <columnConstraints>
+                      <ColumnConstraints hgrow="SOMETIMES" minWidth="100.0" percentWidth="50.0" />
+                      <ColumnConstraints hgrow="SOMETIMES" minWidth="100.0" percentWidth="50.0" />
+                    </columnConstraints>
+                    <rowConstraints>
+                      <RowConstraints minHeight="30.0" vgrow="SOMETIMES" />
+                      <RowConstraints minHeight="30.0" vgrow="SOMETIMES" />
+                      <RowConstraints minHeight="30.0" vgrow="SOMETIMES" />
+                    </rowConstraints>
+                     <children>
+                        <!-- Nome Completo -->
+                        <VBox spacing="4.0" GridPane.columnSpan="2" GridPane.rowIndex="0">
+                           <children>
+                              <Label style="-fx-text-fill: #cfd6df; -fx-font-size: 12px; -fx-font-weight: bold;" text="Nome Completo *" />
+                              <TextField fx:id="txtNome" promptText="Ex: João da Silva" style="-fx-background-color: #28303f; -fx-text-fill: white; -fx-prompt-text-fill: #6c757d; -fx-background-radius: 4; -fx-padding: 8; -fx-font-size: 13px;" />
+                           </children>
+                        </VBox>
+
+                        <!-- CPF / CNPJ -->
+                        <VBox spacing="4.0" GridPane.columnIndex="0" GridPane.rowIndex="1">
+                           <children>
+                              <Label style="-fx-text-fill: #cfd6df; -fx-font-size: 12px; -fx-font-weight: bold;" text="CPF / CNPJ *" />
+                              <TextField fx:id="txtDocumento" promptText="000.000.000-00" style="-fx-background-color: #28303f; -fx-text-fill: white; -fx-prompt-text-fill: #6c757d; -fx-background-radius: 4; -fx-padding: 8; -fx-font-size: 13px;" />
+                           </children>
+                        </VBox>
+
+                        <!-- E-mail -->
+                        <VBox spacing="4.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                           <children>
+                              <Label style="-fx-text-fill: #cfd6df; -fx-font-size: 12px;" text="E-mail" />
+                              <TextField fx:id="txtEmail" promptText="cliente@email.com" style="-fx-background-color: #28303f; -fx-text-fill: white; -fx-prompt-text-fill: #6c757d; -fx-background-radius: 4; -fx-padding: 8; -fx-font-size: 13px;" />
+                           </children>
+                        </VBox>
+
+                        <!-- Telefone -->
+                        <VBox spacing="4.0" GridPane.columnIndex="0" GridPane.rowIndex="2">
+                           <children>
+                              <Label style="-fx-text-fill: #cfd6df; -fx-font-size: 12px;" text="Telefone / WhatsApp" />
+                              <TextField fx:id="txtTelefone" promptText="(00) 90000-0000" style="-fx-background-color: #28303f; -fx-text-fill: white; -fx-prompt-text-fill: #6c757d; -fx-background-radius: 4; -fx-padding: 8; -fx-font-size: 13px;" />
+                           </children>
+                        </VBox>
+                     </children>
+                  </GridPane>
+               </children>
+            </VBox>
+
+            <!-- Linha Divisória -->
+            <Pane style="-fx-background-color: #28303f; -fx-min-height: 1px; -fx-max-height: 1px;" />
+
+            <!-- Seção 2: Dados Comerciais / Concessionária -->
+            <VBox spacing="10.0">
+               <children>
+                  <Label style="-fx-font-size: 14px; -fx-font-weight: bold; -fx-text-fill: #38bdf8;" text="🚗 Perfil Comercial (Concessionária)" />
+                  <GridPane hgap="20.0" vgap="12.0">
+                    <columnConstraints>
+                      <ColumnConstraints hgrow="SOMETIMES" minWidth="100.0" percentWidth="50.0" />
+                      <ColumnConstraints hgrow="SOMETIMES" minWidth="100.0" percentWidth="50.0" />
+                    </columnConstraints>
+                    <rowConstraints>
+                      <RowConstraints minHeight="30.0" vgrow="SOMETIMES" />
+                      <RowConstraints minHeight="30.0" vgrow="SOMETIMES" />
+                    </rowConstraints>
+                     <children>
+                        <!-- Veículo de Interesse -->
+                        <VBox spacing="4.0" GridPane.columnIndex="0" GridPane.rowIndex="0">
+                           <children>
+                              <Label style="-fx-text-fill: #cfd6df; -fx-font-size: 12px; -fx-font-weight: bold;" text="Veículo de Interesse" />
+                              <TextField fx:id="txtVeiculoInteresse" promptText="Ex: Jeep Compass 2025" style="-fx-background-color: #28303f; -fx-text-fill: white; -fx-prompt-text-fill: #6c757d; -fx-background-radius: 4; -fx-padding: 8; -fx-font-size: 13px;" />
+                           </children>
+                        </VBox>
+
+                        <!-- Veículo na Troca -->
+                        <VBox spacing="4.0" GridPane.columnIndex="1" GridPane.rowIndex="0">
+                           <children>
+                              <Label style="-fx-text-fill: #cfd6df; -fx-font-size: 12px;" text="Veículo na Troca (Trade-in)" />
+                              <TextField fx:id="txtVeiculoTroca" promptText="Ex: Onix 2020 (Opcional)" style="-fx-background-color: #28303f; -fx-text-fill: white; -fx-prompt-text-fill: #6c757d; -fx-background-radius: 4; -fx-padding: 8; -fx-font-size: 13px;" />
+                           </children>
+                        </VBox>
+
+                        <!-- Estágio da Venda (Com cor de texto corrigida) -->
+                        <VBox spacing="4.0" GridPane.columnIndex="0" GridPane.rowIndex="1">
+                           <children>
+                              <Label style="-fx-text-fill: #cfd6df; -fx-font-size: 12px;" text="Estágio da Venda" />
+                              <ComboBox fx:id="cbEstagio" maxWidth="1.7976931348623157E308" style="-fx-background-color: #28303f; -fx-background-radius: 4; -fx-font-size: 13px;" />
+                           </children>
+                        </VBox>
+
+                        <!-- Status Cadastral (Com cor de texto corrigida) -->
+                        <VBox spacing="4.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                           <children>
+                              <Label style="-fx-text-fill: #cfd6df; -fx-font-size: 12px;" text="Status Cadastral" />
+                              <ComboBox fx:id="cbStatus" maxWidth="1.7976931348623157E308" style="-fx-background-color: #28303f; -fx-background-radius: 4; -fx-font-size: 13px;" />
+                           </children>
+                        </VBox>
+                     </children>
+                  </GridPane>
+               </children>
+            </VBox>
+
+         </children>
+      </VBox>
 
       <!-- Mensagem de Alerta/Erro -->
-      <Label fx:id="lblMensagem" style="-fx-text-fill: #ff5555; -fx-font-size: 12px;" visible="false" />
+      <Label fx:id="lblMensagem" style="-fx-text-fill: #f87171; -fx-font-size: 13px;" visible="false" />
 
-      <!-- Botoes de Ação -->
-      <HBox alignment="CENTER_RIGHT" spacing="10.0">
+      <!-- Botões de Ação -->
+      <HBox alignment="CENTER_LEFT" spacing="12.0">
          <children>
-            <Button fx:id="btnCancelar" onAction="#handleCancelar" style="-fx-background-color: #3a4252; -fx-text-fill: white; -fx-cursor: hand;" text="Cancelar" />
-            <Button fx:id="btnSalvar" onAction="#handleSalvar" style="-fx-background-color: #28a745; -fx-text-fill: white; -fx-font-weight: bold; -fx-cursor: hand;" text="Salvar Cliente" />
+            <Button fx:id="btnSalvar" onAction="#handleSalvar" style="-fx-background-color: #22c55e; -fx-text-fill: white; -fx-font-weight: bold; -fx-font-size: 13px; -fx-padding: 10 24; -fx-background-radius: 5; -fx-cursor: hand;" text="Salvar Cliente" />
+            <Button fx:id="btnCancelar" onAction="#handleCancelar" style="-fx-background-color: #334155; -fx-text-fill: white; -fx-font-size: 13px; -fx-padding: 10 20; -fx-background-radius: 5; -fx-cursor: hand;" text="Cancelar / Voltar" />
          </children>
-         <VBox.margin>
-            <Insets top="15.0" />
-         </VBox.margin>
       </HBox>
+
    </children>
 </VBox>

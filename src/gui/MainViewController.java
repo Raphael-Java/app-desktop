@@ -91,21 +91,12 @@ public class MainViewController implements Initializable {
 
     @FXML
     public void onBtCadastrarClienteAction() {
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/CadastroCliente.fxml"));
-            VBox parent = loader.load();
-
-            Stage stage = new Stage();
-            stage.setTitle("Cadastrar Novo Cliente");
-            stage.setScene(new Scene(parent));
-            stage.initModality(Modality.APPLICATION_MODAL);
-            stage.setResizable(false);
-            stage.showAndWait();
-        } catch (IOException e) {
-            Alerts.showAlert("Erro", "Erro ao carregar formulário de cliente", e.getMessage(), AlertType.ERROR);
-        }
+        // Carrega diretamente na página principal substituindo o pop-up
+        loadView("/gui/CadastroCliente.fxml", (Object controller) -> {
+            // Inicializações adicionais do controller de cliente, se necessário
+        });
     }
-
+    
     @FXML
     public void onBtConsultarEstoqueAction() {
         loadView("/gui/ConsultaEstoque.fxml", (Object controller) -> {});
@@ -118,7 +109,6 @@ public class MainViewController implements Initializable {
     
     @FXML
     public void onBtCalculadoraAction() {
-        // Alterado para carregar a calculadora interna em vez do executável do Windows
         loadView("/gui/CalculatorView.fxml", (Object controller) -> {});
     }
 
@@ -319,24 +309,26 @@ public class MainViewController implements Initializable {
         }
     }
 
-    // Carrega um FXML externo e insere no ScrollPane central
- // Carrega um FXML externo e insere no ScrollPane central
+    // Carrega um FXML externo e insere no ScrollPane central com suporte seguro a qualquer Node
     private synchronized <T> void loadView(String absoluteName, Consumer<T> initializingAction) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource(absoluteName));
-            Node newContent = loader.load(); // Alterado de VBox para Node para suportar HBox (Calculadora)
+            Node newContent = loader.load(); 
 
             T controller = loader.getController();
-            initializingAction.accept(controller);
+            if (initializingAction != null && controller != null) {
+                initializingAction.accept(controller);
+            }
 
             setMainContent(newContent);
 
         } catch (IOException e) {
-            Alerts.showAlert("IO Exception", "Error loading view", e.getMessage(), AlertType.ERROR);
+            Alerts.showAlert("IO Exception", "Erro ao carregar a página", e.getMessage(), AlertType.ERROR);
+            e.printStackTrace();
         }
     }
 
-    // Método centralizado para trocar o conteúdo do ScrollPane e remover a barra de rolagem
+    // Método centralizado para trocar o conteúdo do ScrollPane sem erros de tipo
     private void setMainContent(Node node) {
         Scene mainScene = Main.getMainScene();
         if (mainScene != null && mainScene.getRoot() instanceof BorderPane) {
@@ -347,7 +339,7 @@ public class MainViewController implements Initializable {
 
                 scrollPane.setFitToWidth(true);
                 scrollPane.setFitToHeight(true);
-                scrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
+                scrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED); // Permite rolar se o formulário for maior
                 scrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
 
                 scrollPane.setContent(node);
