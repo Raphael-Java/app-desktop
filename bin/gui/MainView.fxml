@@ -19,7 +19,7 @@
 
 <BorderPane prefHeight="600.0" prefWidth="950.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.MainViewController">
    
-   <!-- 1. MENU SUPERIOR COM PROFILE DO USUÁRIO -->
+   <!--MENU SUPERIOR COM PROFILE DO USUÁRIO-->
    <top>
       <HBox alignment="CENTER_LEFT" styleClass="top-bar" BorderPane.alignment="CENTER">
          <children>
@@ -34,6 +34,7 @@
                   <items>
                     <MenuItem fx:id="menuItemSeller" mnemonicParsing="false" onAction="#onMenuItemSellerAction" text="Seller" />
                     <MenuItem fx:id="menuItemDepartment" mnemonicParsing="false" onAction="#onMenuItemDepartmentAction" text="Department" />
+                    <MenuItem fx:id="menuItemManager" mnemonicParsing="false" onAction="#onMenuItemManagerAction" text="Manager" />
                     <MenuItem fx:id="menuItemSales" mnemonicParsing="false" onAction="#onMenuItemSalesAction" text="Sales" />
                   </items>
                 </Menu>
@@ -43,7 +44,7 @@
                    </items>
                 </Menu>
                 
-                <!-- MENU FERRAMENTAS COM CALCULAR FRETE -->
+                <!-- MENU FERRAMENTAS -->
                 <Menu mnemonicParsing="false" text="Ferramentas">
                   <items>
                     <MenuItem mnemonicParsing="false" onAction="#onBtCalculateShippingAction" text="🚚 Calcular Frete" />
@@ -58,7 +59,7 @@
               </menus>
             </MenuBar>
 
-            <!-- CARD DE USUÁRIO LOGADO NA BARRA BRANCA -->
+            <!-- CARD DE USUÁRIO LOGADO -->
             <HBox alignment="CENTER_RIGHT" spacing="10.0" styleClass="user-profile-box">
                <padding>
                   <Insets right="15.0" />
@@ -81,7 +82,7 @@
       </HBox>
    </top>
 
-   <!-- 2. MENU LATERAL -->
+   <!-- 2. MENU LATERAL (COM OS NOVOS ATALHOS RÁPIDOS) -->
    <left>
       <VBox prefWidth="200.0" spacing="10.0" styleClass="sidebar" BorderPane.alignment="CENTER">
          <padding>
@@ -89,6 +90,13 @@
          </padding>
          <children>
             <Label styleClass="sidebar-section-title" text="ATALHOS RÁPIDOS" />
+            
+            <!-- NOVOS BOTÕES ADICIONADOS -->
+            <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onBtCadastrarClienteAction" styleClass="sidebar-btn" text="👤 Cadastrar Cliente" />
+            <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onBtConsultarEstoqueAction" styleClass="sidebar-btn" text="📦 Consultar Estoque" />
+            <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onBtCalculadoraAction" styleClass="sidebar-btn" text="🧮 Calculadora" />
+            
+            <!-- BOTÕES EXISTENTES -->
             <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onBtReportsAction" styleClass="sidebar-btn" text="📊 Relatórios" />
             <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onBtExportPdfAction" styleClass="sidebar-btn" text="📄 Exportar PDF" />
             <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onBtSettingsAction" styleClass="sidebar-btn" text="⚙️ Configurações" />

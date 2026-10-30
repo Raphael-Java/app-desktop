@@ -19,7 +19,7 @@
 
 <BorderPane prefHeight="600.0" prefWidth="950.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.MainViewController">
    
-   <!-- 1. MENU SUPERIOR COM PROFILE DO USUÁRIO -->
+   <!--MENU SUPERIOR COM PROFILE DO USUÁRIO-->
    <top>
       <HBox alignment="CENTER_LEFT" styleClass="top-bar" BorderPane.alignment="CENTER">
          <children>
@@ -34,6 +34,7 @@
                   <items>
                     <MenuItem fx:id="menuItemSeller" mnemonicParsing="false" onAction="#onMenuItemSellerAction" text="Seller" />
                     <MenuItem fx:id="menuItemDepartment" mnemonicParsing="false" onAction="#onMenuItemDepartmentAction" text="Department" />
+                    <MenuItem fx:id="menuItemManager" mnemonicParsing="false" onAction="#onMenuItemManagerAction" text="Manager" />
                     <MenuItem fx:id="menuItemSales" mnemonicParsing="false" onAction="#onMenuItemSalesAction" text="Sales" />
                   </items>
                 </Menu>

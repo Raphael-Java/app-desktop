@@ -33,6 +33,7 @@ import javafx.scene.shape.Circle;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import model.services.DepartmentService;
+import model.services.ManagerService;
 import model.services.SalesService;
 import model.services.SellerService;
 
@@ -45,6 +46,7 @@ public class MainViewController implements Initializable {
     @FXML private MenuItem menuItemHome;
     @FXML private MenuItem menuItemSeller;
     @FXML private MenuItem menuItemDepartment;
+    @FXML private MenuItem menuItemManager; // 👈 Adicionado aqui
     @FXML private MenuItem menuItemSales;
     @FXML private MenuItem menuItemNewSale;
     @FXML private MenuItem menuItemAbout;
@@ -91,10 +93,7 @@ public class MainViewController implements Initializable {
 
     @FXML
     public void onBtCadastrarClienteAction() {
-        // Carrega diretamente na página principal substituindo o pop-up
-        loadView("/gui/CadastroCliente.fxml", (Object controller) -> {
-            // Inicializações adicionais do controller de cliente, se necessário
-        });
+        loadView("/gui/CadastroCliente.fxml", (Object controller) -> {});
     }
     
     @FXML
@@ -187,6 +186,15 @@ public class MainViewController implements Initializable {
     public void onMenuItemDepartmentAction() {
         loadView("/gui/DepartmentList.fxml", (DepartmentListController controller) -> {
             controller.setDepartmentService(new DepartmentService());
+            controller.updateTableView();
+        });
+    }
+
+    // 👈 NOVO MÉTODO PARA ABRIR A TELA DE MANAGERS
+    @FXML
+    public void onMenuItemManagerAction() {
+        loadView("/gui/ManagerList.fxml", (ManagerListController controller) -> {
+            controller.setManagerService(new ManagerService());
             controller.updateTableView();
         });
     }
@@ -309,7 +317,6 @@ public class MainViewController implements Initializable {
         }
     }
 
-    // Carrega um FXML externo e insere no ScrollPane central com suporte seguro a qualquer Node
     private synchronized <T> void loadView(String absoluteName, Consumer<T> initializingAction) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource(absoluteName));
@@ -328,7 +335,6 @@ public class MainViewController implements Initializable {
         }
     }
 
-    // Método centralizado para trocar o conteúdo do ScrollPane sem erros de tipo
     private void setMainContent(Node node) {
         Scene mainScene = Main.getMainScene();
         if (mainScene != null && mainScene.getRoot() instanceof BorderPane) {
@@ -339,7 +345,7 @@ public class MainViewController implements Initializable {
 
                 scrollPane.setFitToWidth(true);
                 scrollPane.setFitToHeight(true);
-                scrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED); // Permite rolar se o formulário for maior
+                scrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED);
                 scrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
 
                 scrollPane.setContent(node);

@@ -48,19 +48,24 @@
             <!-- 1. Tabela de Departamentos -->
             <TableView fx:id="tableViewDepartment" HBox.hgrow="ALWAYS">
               <columns>
-                <TableColumn fx:id="tableColumnId" prefWidth="60.0" text="Id" />
-                <TableColumn fx:id="tableColumnName" prefWidth="220.0" text="Name" />
-                <TableColumn fx:id="tableColumnEDIT" prefWidth="75.0" />
-                <TableColumn fx:id="tableColumnREMOVE" prefWidth="75.0" />
+                <TableColumn fx:id="tableColumnId" prefWidth="50.0" text="Id" />
+                <TableColumn fx:id="tableColumnName" prefWidth="140.0" text="Name" />
+                
+                <!-- Novas colunas adicionadas -->
+                <TableColumn fx:id="tableColumnManager" prefWidth="130.0" text="Manager" />
+                <TableColumn fx:id="tableColumnSellersCount" prefWidth="75.0" text="Sellers" />
+                
+                <TableColumn fx:id="tableColumnEDIT" prefWidth="65.0" />
+                <TableColumn fx:id="tableColumnREMOVE" prefWidth="65.0" />
               </columns>
             </TableView>
 
             <!-- 2. Card Lateral Ilustrativo -->
             <VBox alignment="CENTER" maxWidth="340.0" minWidth="260.0" prefWidth="300.0" spacing="15.0" style="-fx-background-color: #1e293b; -fx-background-radius: 8px; -fx-padding: 15px;" HBox.hgrow="NEVER">
                <children>
-                  <ImageView fitHeight="280.0" fitWidth="260.0" preserveRatio="true">
+                  <ImageView fx:id="imageViewCar" fitHeight="350.0" fitWidth="270.0" preserveRatio="false" VBox.vgrow="ALWAYS">
                      <image>
-                        <Image url="@/img/offroad.png" />
+                        <Image url="@/img/moto.jpg" />
                      </image>
                   </ImageView>
                   <Label text="Categorias de Veículos" textFill="WHITE">

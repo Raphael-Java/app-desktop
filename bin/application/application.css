@@ -57,6 +57,7 @@
 .scroll-pane {
     -fx-border-color: transparent !important;
 }
+
 /* ==========================================================================
    2. TELA DE LOGIN
    ========================================================================== */
@@ -122,34 +123,34 @@
 }
 
 /* ==========================================================================
-   3. MENU LATERAL (SIDEBAR ESQUERDA)
+   3. MENU LATERAL (SIDEBAR ESQUERDA) - CORRIGIDO (ALTO CONTRASTE)
    ========================================================================== */
 .sidebar {
     -fx-background-color: #1f2937;
-    -fx-pref-width: 200px;
+    -fx-pref-width: 220px; /* Largura expandida para melhor distribuição */
     -fx-border-color: transparent #374151 transparent transparent;
 }
 
 .sidebar-section-title {
-    -fx-text-fill: #6b7280;
-    -fx-font-size: 10px;
+    -fx-text-fill: #9ca3af; /* Cinza claro suave para visibilidade */
+    -fx-font-size: 11px;
     -fx-font-weight: bold;
     -fx-padding: 15px 0 5px 15px;
 }
 
 .sidebar-btn {
     -fx-background-color: transparent;
-    -fx-text-fill: #9ca3af;
+    -fx-text-fill: #f3f4f6; /* Branco acinzentado de alto contraste */
     -fx-font-size: 13px;
     -fx-alignment: BASELINE_LEFT;
     -fx-padding: 10px 15px;
     -fx-cursor: hand;
-    -fx-background-radius: 0;
+    -fx-background-radius: 4px;
 }
 
 .sidebar-btn:hover {
     -fx-background-color: #374151;
-    -fx-text-fill: #ffffff;
+    -fx-text-fill: #ffffff; /* Destaque completo */
 }
 
 .sidebar-btn:pressed {
@@ -157,7 +158,7 @@
 }
 
 /* ==========================================================================
-   4. CARDS DE METRICAS (KPI DASHBOARD - MANTIDOS BRANCOS)
+   4. CARDS DE METRICAS (KPI DASHBOARD - MANTIDOS BRANCOS COM CORREÇÕES)
    ========================================================================== */
 .kpi-card {
     -fx-background-color: #ffffff !important;
@@ -175,8 +176,26 @@
 
 .kpi-value {
     -fx-text-fill: #111827 !important;
-    -fx-font-size: 20px;
+    -fx-font-size: 22px; /* Ligeiramente maior para impacto visual */
     -fx-font-weight: bold;
+}
+
+/* Badges semânticas para os indicadores */
+.kpi-badge-positive {
+    -fx-text-fill: #16a34a !important; /* Verde semântico legível */
+    -fx-font-weight: bold;
+    -fx-font-size: 11px;
+}
+
+.kpi-badge-negative {
+    -fx-text-fill: #dc2626 !important; /* Vermelho semântico */
+    -fx-font-weight: bold;
+    -fx-font-size: 11px;
+}
+
+.kpi-badge-neutral {
+    -fx-text-fill: #4b5563 !important; /* Cinza legível para status passivo */
+    -fx-font-size: 11px;
 }
 
 .banner-container {
@@ -315,30 +334,13 @@
     -fx-border-color: transparent transparent #e5e7eb transparent;
 }
 
-.top-bar .menu-bar {
-    -fx-border-color: transparent !important;
-}
-
 .user-name {
-    -fx-text-fill: #1f2937;
-    -fx-font-size: 13px;
+    -fx-text-fill: #111827;
     -fx-font-weight: bold;
+    -fx-font-size: 14px;
 }
 
 .user-role {
     -fx-text-fill: #6b7280;
-    -fx-font-size: 11px;
-}
-
-/* ==========================================================================
-   RODAPÉ (BARRA DE STATUS DO BANCO DE DADOS)
-   ========================================================================== */
-.status-bar {
-    -fx-background-color: #1f2937;
-    -fx-border-color: #374151 transparent transparent transparent;
-}
-
-.status-text {
-    -fx-text-fill: #9ca3af;
-    -fx-font-size: 11px;
+    -fx-font-size: 12px;
 }

@@ -28,7 +28,9 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.Pane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import model.entities.Department;
 import model.entities.Manager;
+import model.services.DepartmentService;
 import model.services.ManagerService;
 
 public class ManagerListController implements Initializable, DataChangeListener {
@@ -46,6 +48,9 @@ public class ManagerListController implements Initializable, DataChangeListener 
 
     @FXML
     private TableColumn<Manager, String> tableColumnEmail;
+
+    @FXML
+    private TableColumn<Manager, Department> tableColumnDepartment;
 
     @FXML
     private TableColumn<Manager, Manager> tableColumnEDIT;
@@ -78,6 +83,19 @@ public class ManagerListController implements Initializable, DataChangeListener 
         tableColumnId.setCellValueFactory(new PropertyValueFactory<>("id"));
         tableColumnName.setCellValueFactory(new PropertyValueFactory<>("name"));
         tableColumnEmail.setCellValueFactory(new PropertyValueFactory<>("email"));
+        
+        tableColumnDepartment.setCellValueFactory(new PropertyValueFactory<>("department"));
+        tableColumnDepartment.setCellFactory(column -> new TableCell<Manager, Department>() {
+            @Override
+            protected void updateItem(Department department, boolean empty) {
+                super.updateItem(department, empty);
+                if (empty || department == null) {
+                    setText(null);
+                } else {
+                    setText(department.getName());
+                }
+            }
+        });
 
         Stage stage = (Stage) Main.getMainScene().getWindow();
         tableViewManager.prefHeightProperty().bind(stage.heightProperty());
@@ -101,7 +119,8 @@ public class ManagerListController implements Initializable, DataChangeListener 
 
             ManagerFormController controller = loader.getController();
             controller.setManager(obj);
-            controller.setManagerService(new ManagerService());
+            controller.setServices(new ManagerService(), new DepartmentService());
+            controller.loadAssociatedObjects();
             controller.subscribeDataChangeListener(this);
             controller.updateFormData();
 
